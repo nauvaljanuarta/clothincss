@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClothIn? - Article Archive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <style>
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'MontSerrat', sans-serif;
+            overflow: clip;
+        }
+
+        .hidden-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .visible-section {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sticky {
+            transition: all 0.3s ease;
+        }
+
+        .sticky.scrolled {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .article-card {
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pagination-item {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 9999px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-item:hover {
+            background-color: var(--color-blue-100);
+        }
+
+        .pagination-item.active {
+            background-color: var(--color-blue-500);
+            color: white;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 500;
+            background-color: var(--color-blue-100);
+            color: var(--color-blue-600);
+            transition: all 0.3s ease;
+        }
+
+        .category-badge:hover {
+            background-color: var(--color-blue-500);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="navbar" class="sticky top-0 z-40 bg-white shadow-black">
+        <div class="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <nav class="hidden lg:flex items-center gap-6">
+                <a href="index.html#testimonials"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Testimonials</a>
+                <a href="index.html#features"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Features</a>
+                <a href="archive.html"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Blog</a>
+                <a href="index.html#contact"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Contact</a>
+            </nav>
+
+            <div class="text-center">
+                <a href="landing.html" class="nav-link"><span
+                        class="text-2xl sm:text-4xl font-bold me-70">ClothIn.</span></a>
+            </div>
+
+            <div class="flex items-center justify-end gap-4">
+                <button
+                    class="hidden lg:inline-block text-sm font-medium bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md">
+                    Get Started
+                </button>
+
+                <button id="mobile-menu-button"
+                    class="lg:hidden p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:ring-2">
+                    <span class="sr-only">Open main menu</span>
+                    <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg id="close-icon" class="hidden h-6 w-6" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="ml-auto">
+            <div id="mobile-menu" class="hidden lg:hidden px-4 bg-white shadow-lg">
+                <a href="index.html#testimonials"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Testimonials</a>
+                <a href="index.html#features"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Features</a>
+                <a href="archive.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Blog</a>
+                <a href="index.html#contact"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Contact</a>
+                <div class="px-3 py-2">
+                    <button class="w-full bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md">Get
+                        Started</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        <!-- Archive Hero Section -->
+        <section class="py-20 bg-blue-500/3 relative">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Fashion Stories & Tips</h1>
+                    <p class="text-lg text-gray-600 mb-8">
+                        Discover the latest trends in sustainable fashion, secondhand style guides, and stories from our
+                        community.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <a href="#" class="category-badge">All Articles</a>
+                        <a href="#" class="category-badge">Sustainable Fashion</a>
+                        <a href="#" class="category-badge">Style Tips</a>
+                        <a href="#" class="category-badge">Thrifting</a>
+                        <a href="#" class="category-badge">Community Stories</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute inset-0 pointer-events-none -z-10 mix-blend-overlay blur-sm">
+                <div
+                    class="absolute top-28 left-40 w-0 h-0 border-l-[160px] border-b-[170px] border-l-transparent border-b-blue-300 opacity-30">
+                </div>
+                <div
+                    class="absolute -top-13 left-39 w-0 h-0 border-l-[160px] border-b-[170px] border-l-transparent border-b-blue-300 opacity-30 rotate-90">
+                </div>
+                <div class="absolute top-75 left-40 w-40 h-40 bg-blue-300/30 rounded-full"></div>
+                <div class="absolute top-30 -left-2 w-40 h-40 bg-blue-300/30 rounded-24"></div>
+            </div>
+        </section>
+
+        <!-- Featured Article -->
+        <section class="py-12 hidden-section">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h2 class="text-2xl font-bold mb-8">Featured Article</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-[2fr_4fr] gap-8">
+                    <div class="aspect-square">
+                        <img src="images/blog1.jpg" alt="Featured Article" class="w-full h-full object-cover rounded-lg">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <span>May 15, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>8 min read</span>
+                            <span class="mx-2">•</span>
+                            <span class="category-badge">Sustainable Fashion</span>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-4">The Future of Sustainable Fashion: How Secondhand Clothing is Changing the Industry</h3>
+                        <p class="text-gray-600 mb-6">
+                            Explore how the growing trend of buying and selling pre-loved clothing is disrupting the fashion industry and creating a more sustainable future. From reducing waste to creating new economic opportunities, secondhand fashion is more than just a trend—it's a movement.
+                        </p>
+                        <a href="detailarsip.html" class="text-blue-500 font-medium flex items-center hover:underline">
+                            Read Full Article
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Grid -->
+        <section class="py-12 hidden-section">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h2 class="text-2xl font-bold mb-8">Latest Articles</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Article Card 1 -->
+                    <div class="article-card overflow-hidden border-0 shadow-md rounded-lg bg-white">
+                        <div class="aspect-square">
+                            <img src="images/blog1.jpg" alt="Wardrobe Refresh" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <span>Apr 10, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>4 min read</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">5 Easy Ways to Refresh Your Closet Sustainably</h3>
+                            <p class="text-gray-600 mb-4">Give your wardrobe new life without buying new. Here's how to
+                                upcycle, swap, and sell fashionably.</p>
+                            <a href="article.html" class="text-blue-500 font-medium flex items-center hover:underline">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Article Card 2 -->
+                    <div class="article-card overflow-hidden border-0 shadow-md rounded-lg bg-white">
+                        <div class="aspect-square">
+                            <img src="images/blog2.jpg" alt="Thrift Guide" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <span>Apr 5, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>6 min read</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">The Ultimate Guide to Thrifting Like a Pro</h3>
+                            <p class="text-gray-600 mb-4">Master the art of secondhand shopping with tips on finding
+                                gems, knowing value, and shopping sustainably.</p>
+                            <a href="article.html" class="text-blue-500 font-medium flex items-center hover:underline">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Article Card 3 -->
+                    <div class="article-card overflow-hidden border-0 shadow-md rounded-lg bg-white">
+                        <div class="aspect-square">
+                            <img src="images/blog3.jpg" alt="Eco Fashion Tips" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <span>Mar 28, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>5 min read</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">How Clothin is Changing the Way We Shop</h3>
+                            <p class="text-gray-600 mb-4">Explore how buying and selling preloved clothing is making
+                                fashion more affordable and sustainable for everyone.</p>
+                            <a href="article.html" class="text-blue-500 font-medium flex items-center hover:underline">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Article Card 4 -->
+                    <div class="article-card overflow-hidden border-0 shadow-md rounded-lg bg-white">
+                        <div class="aspect-square">
+                            <img src="images/blog2.jpg" alt="Sustainable Brands" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <span>Mar 20, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>7 min read</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">10 Sustainable Fashion Brands You Should Know</h3>
+                            <p class="text-gray-600 mb-4">Discover ethical fashion brands that are leading the way in sustainability while still offering stylish options.</p>
+                            <a href="article.html" class="text-blue-500 font-medium flex items-center hover:underline">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Article Card 5 -->
+                    <div class="article-card overflow-hidden border-0 shadow-md rounded-lg bg-white">
+                        <div class="aspect-square">
+                            <img src="images/blog1.jpg" alt="Capsule Wardrobe" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <span>Mar 15, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>5 min read</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Building a Capsule Wardrobe with Secondhand Pieces</h3>
+                            <p class="text-gray-600 mb-4">Learn how to create a versatile, timeless wardrobe using only pre-loved clothing items that will last for years.</p>
+                            <a href="article.html" class="text-blue-500 font-medium flex items-center hover:underline">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Article Card 6 -->
+                    <div class="article-card overflow-hidden border-0 shadow-md rounded-lg bg-white">
+                        <div class="aspect-square">
+                            <img src="images/blog3.jpg" alt="Seller Success" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <span>Mar 8, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>6 min read</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">From Closet to Cash: Success Stories from Clothin Sellers</h3>
+                            <p class="text-gray-600 mb-4">Read inspiring stories from people who turned their unused clothing into a profitable side hustle on Clothin.</p>
+                            <a href="article.html" class="text-blue-500 font-medium flex items-center hover:underline">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex justify-center mt-12">
+                    <nav class="flex items-center space-x-2">
+                        <a href="#" class="pagination-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </a>
+                        <a href="#" class="pagination-item active">1</a>
+                        <a href="#" class="pagination-item">2</a>
+                        <a href="#" class="pagination-item">3</a>
+                        <span class="px-2">...</span>
+                        <a href="#" class="pagination-item">8</a>
+                        <a href="#" class="pagination-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="py-20 bg-blue-500/3 hidden-section">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-3xl font-bold mb-4">Stay Updated</h2>
+                    <p class="text-lg text-gray-600 mb-8">
+                        Subscribe to our newsletter to receive the latest fashion tips, sustainable style guides, and exclusive offers.
+                    </p>
+                    <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                        <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        <button type="submit" class="px-6 py-3 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 transition-colors">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-300 z-40 relative">
+        <div class="container mx-auto px-4 sm:px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">About Us</h3>
+                    <p class="mb-4">
+                        We're on a mission to help businesses thrive in the digital age with innovative solutions and
+                        exceptional
+                        support.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                            </svg>
+                            <span class="sr-only">Facebook</span>
+                        </a>
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                            </svg>
+                            <span class="sr-only">Twitter</span>
+                        </a>
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01" />
+                            </svg>
+                            <span class="sr-only">Instagram</span>
+                        </a>
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span class="sr-only">LinkedIn</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="index.html" class="hover:text-white transition-colors">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#features" class="hover:text-white transition-colors nav-link">
+                                Features
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#testimonials" class="hover:text-white transition-colors nav-link">
+                                Testimonials
+                            </a>
+                        </li>
+                        <li>
+                            <a href="archive.html" class="hover:text-white transition-colors nav-link">
+                                Blog
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#contact" class="hover:text-white transition-colors nav-link">
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Documentation
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Help Center
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Case Studies
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                API Reference
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Privacy Policy
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 mt-0.5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span>nauvalaryanto2005@gmail.com</span>
+                        </li>
+                        <li>
+                            <p>Karah Indah VI BLok D 28</p>
+                            <p>surabaya, Jambangan</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm">
+                <p>&copy; 2025 Clothin. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+        class="back-to-top p-2 rounded-full bg-blue-500 text-white shadow-md hover:bg-blue-500/90">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //menu mobile
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                menuIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+            });
+
+            // scroll smooth tap navbar
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').includes('#')) {
+                        e.preventDefault();
+
+                        if (!mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                            menuIcon.classList.remove('hidden');
+                            closeIcon.classList.add('hidden');
+                        }
+
+                        const targetId = this.getAttribute('href').split('#')[1];
+                        const targetElement = document.getElementById(targetId);
+
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // animasi saat scroll
+            const sections = document.querySelectorAll('.hidden-section');
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible-section');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            // heaader sticky untuk shadow
+            const header = document.getElementById('navbar');
+            const headerObserver = new IntersectionObserver((entries) => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            headerObserver.observe(header);
+
+            window.addEventListener('scroll', function() {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            // tombol keatas
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('active');
+                } else {
+                    backToTopButton.classList.remove('active');
+                }
+            });
+
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History - ClothIn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <style>
+        .history-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--color-gray-300);
+            border-radius: 0.25rem;
+            background-color: white;
+            font-family: inherit;
+        }
+
+        .order-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--color-gray-200);
+            background-color: var(--color-gray-50);
+        }
+
+        .order-info h3 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .order-info p {
+            color: var(--color-gray-600);
+            font-size: 0.875rem;
+        }
+
+        .order-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-completed {
+            background-color: var(--color-green-100);
+            color: var(--color-green-700);
+        }
+
+        .status-processing {
+            background-color: var(--color-blue-100);
+            color: var(--color-blue-700);
+        }
+
+        .status-shipped {
+            background-color: var(--color-yellow-100);
+            color: var(--color-yellow-700);
+        }
+
+        .status-cancelled {
+            background-color: var(--color-red-100);
+            color: var(--color-red-700);
+        }
+
+        .order-items {
+            padding: 1.5rem;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--color-gray-100);
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 0.375rem;
+        }
+
+        .item-details h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-details p {
+            font-size: 0.875rem;
+            color: var(--color-gray-600);
+        }
+
+        .item-price {
+            margin-left: auto;
+            font-weight: 600;
+            color: var(--color-blue-600);
+        }
+
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-top: 1px solid var(--color-gray-200);
+            background-color: var(--color-gray-50);
+        }
+
+        .order-total {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--color-blue-600);
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary {
+            padding: 0.5rem 1rem;
+            background-color: white;
+            color: var(--color-gray-700);
+            border: 1px solid var(--color-gray-300);
+            border-radius: 0.25rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-gray-100);
+        }
+
+        .btn-primary {
+            padding: 0.5rem 1rem;
+            background-color: var(--color-blue-500);
+            color: white;
+            border: none;
+            border-radius: 0.25rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-blue-600);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-icon {
+            width: 6rem;
+            height: 6rem;
+            margin: 0 auto 2rem;
+            color: var(--color-gray-400);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-blue-600);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--color-gray-600);
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .filter-bar {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                justify-content: space-between;
+            }
+
+            .order-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .order-footer {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .order-actions {
+                justify-content: space-between;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header id="navbar" class="sticky top-0 z-40 bg-white shadow-black">
+        <div class="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <nav class="hidden lg:flex items-center gap-6">
+                <a href="index.html#testimonials"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Testimonials</a>
+                <a href="index.html#features"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Features</a>
+                <a href="archive.html"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Blog</a>
+                <a href="catalog.html"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Shop</a>
+            </nav>
+
+            <div class="text-center">
+                <a href="index.html" class="nav-link"><span
+                        class="text-2xl sm:text-4xl font-bold me-70">ClothIn.</span></a>
+            </div>
+
+            <div class="flex items-center justify-end gap-4">
+                <a href="cart.html" class="relative p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <span
+                        class="absolute top-0 right-0 bg-blue-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">0</span>
+                </a>
+                <a href="login.html"
+                    class="hidden lg:inline-block text-sm font-medium text-blue-500 hover:text-blue-600">
+                    Log in
+                </a>
+                <a href="register.html"
+                    class="hidden lg:inline-block text-sm font-medium bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md">
+                    Sign up
+                </a>
+
+                <button id="mobile-menu-button"
+                    class="lg:hidden p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:ring-2">
+                    <span class="sr-only">Open main menu</span>
+                    <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg id="close-icon" class="hidden h-6 w-6" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="ml-auto">
+            <div id="mobile-menu" class="hidden lg:hidden px-4 bg-white shadow-lg">
+                <a href="index.html#testimonials"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Testimonials</a>
+                <a href="index.html#features"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Features</a>
+                <a href="archive.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Blog</a>
+                <a href="catalog.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Shop</a>
+                <div class="px-3 py-2">
+                    <a href="login.html" class="block text-center py-2 text-blue-500 hover:text-blue-600">Log in</a>
+                    <a href="register.html"
+                        class="block w-full bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md text-center">Sign
+                        up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        <div class="history-container">
+            <h1 class="text-3xl font-bold mb-8">Transaction History</h1>
+
+            <!-- Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-orders">0</div>
+                    <div class="stat-label">Total Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-spent">$0.00</div>
+                    <div class="stat-label">Total Spent</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="items-purchased">0</div>
+                    <div class="stat-label">Items Purchased</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="avg-order">$0.00</div>
+                    <div class="stat-label">Average Order</div>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label for="status-filter">Status:</label>
+                    <select id="status-filter" class="filter-select" onchange="filterOrders()">
+                        <option value="">All Orders</option>
+                        <option value="completed">Completed</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="date-filter">Date Range:</label>
+                    <select id="date-filter" class="filter-select" onchange="filterOrders()">
+                        <option value="">All Time</option>
+                        <option value="7">Last 7 Days</option>
+                        <option value="30">Last 30 Days</option>
+                        <option value="90">Last 3 Months</option>
+                        <option value="365">Last Year</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Orders List -->
+            <div id="orders-container">
+                <!-- Orders will be dynamically loaded here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <h2 class="text-2xl font-bold mb-4">No orders found</h2>
+                <p class="text-gray-600 mb-8">You haven't made any purchases yet. Start shopping to see your order history here.</p>
+                <a href="catalog.html" class="btn-primary inline-block">Start Shopping</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-300 z-40 relative">
+        <div class="container mx-auto px-4 sm:px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">About Us</h3>
+                    <p class="mb-4">
+                        We're on a mission to make fashion more sustainable and affordable through our pre-loved clothing marketplace.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="catalog.html" class="hover:text-white transition-colors">Shop</a></li>
+                        <li><a href="archive.html" class="hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Customer Service</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FAQs</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Returns</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Contact Us</h3>
+                    <p>support@clothin.com</p>
+                    <p>Karah Indah VI BLok D 28</p>
+                    <p>Surabaya, Jambangan</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm">
+                <p>&copy; 2025 Clothin. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let allOrders = [];
+        let filteredOrders = [];
+
+        // Sample orders data (in real app, this would come from API)
+        const sampleOrders = [
+            {
+                orderId: 'CLT-1735123456789',
+                date: '2024-12-25',
+                status: 'completed',
+                items: [
+                    { name: "Vintage Levi's Denim Jacket", price: 45.99, quantity: 1, image: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?q=80&w=1938&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { name: "Cashmere Turtleneck Sweater", price: 65.00, quantity: 1, image: 'http://images.unsplash.com/photo-1631541909061-71e349d1f203?q=80&w=2010&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { name: "Vintage Leather Crossbody Bag", price: 79.99, quantity: 1, image: 'https://plus.unsplash.com/premium_photo-1705554519595-c1143c7fef97?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
+                ],
+                total: 217.05,
+                paymentMethod: 'credit-card'
+            },
+            {
+                orderId: 'CLT-1734987654321',
+                date: '2024-12-20',
+                status: 'shipped',
+                items: [
+                    { name: "Silk Button-Up Blouse", price: 38.50, quantity: 2, image: 'images/product4.jpg' }
+                ],
+                total: 86.99,
+                paymentMethod: 'e-wallet'
+            },
+            {
+                orderId: 'CLT-1734876543210',
+                date: '2024-12-15',
+                status: 'processing',
+                items: [
+                    { name: "Wool Winter Coat", price: 95.00, quantity: 1, image: 'images/product5.jpg' }
+                ],
+                total: 104.99,
+                paymentMethod: 'bank-transfer'
+            }
+        ];
+
+        function loadOrders() {
+            // Load orders from localStorage or use sample data
+            const storedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+            allOrders = [...storedOrders, ...sampleOrders];
+            filteredOrders = [...allOrders];
+            
+            updateStatistics();
+            renderOrders();
+        }
+
+        function updateStatistics() {
+            const totalOrders = allOrders.length;
+            const totalSpent = allOrders.reduce((sum, order) => sum + order.total, 0);
+            const itemsPurchased = allOrders.reduce((sum, order) => 
+                sum + order.items.reduce((itemSum, item) => itemSum + item.quantity, 0), 0);
+            const avgOrder = totalOrders > 0 ? totalSpent / totalOrders : 0;
+
+            document.getElementById('total-orders').textContent = totalOrders;
+            document.getElementById('total-spent').textContent = `$${totalSpent.toFixed(2)}`;
+            document.getElementById('items-purchased').textContent = itemsPurchased;
+            document.getElementById('avg-order').textContent = `$${avgOrder.toFixed(2)}`;
+        }
+
+        function renderOrders() {
+            const container = document.getElementById('orders-container');
+            const emptyState = document.getElementById('empty-state');
+
+            if (filteredOrders.length === 0) {
+                container.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            
+            container.innerHTML = filteredOrders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <h3>Order ${order.orderId}</h3>
+                            <p>Placed on ${formatDate(order.date)}</p>
+                        </div>
+                        <div class="order-status">
+                            <span class="status-badge status-${order.status}">
+                                ${capitalizeFirst(order.status)}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="order-items">
+                        ${order.items.map(item => `
+                            <div class="order-item">
+                                <img src="${item.image}" alt="${item.name}" class="item-image">
+                                <div class="item-details">
+                                    <h4>${item.name}</h4>
+                                    <p>Quantity: ${item.quantity}</p>
+                                </div>
+                                <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="order-footer">
+                        <div class="order-total">Total: $${order.total.toFixed(2)}</div>
+                        <div class="order-actions">
+                            <button class="btn-secondary" onclick="viewOrderDetails('${order.orderId}')">
+                                View Details
+                            </button>
+                            ${order.status === 'completed' ? 
+                                '<button class="btn-primary" onclick="reorderItems(\'' + order.orderId + '\')">Reorder</button>' : 
+                                order.status === 'processing' ? 
+                                '<button class="btn-secondary" onclick="cancelOrder(\'' + order.orderId + '\')">Cancel</button>' : ''
+                            }
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterOrders() {
+            const statusFilter = document.getElementById('status-filter').value;
+            const dateFilter = document.getElementById('date-filter').value;
+            
+            filteredOrders = allOrders.filter(order => {
+                // Status filter
+                if (statusFilter && order.status !== statusFilter) {
+                    return false;
+                }
+                
+                // Date filter
+                if (dateFilter) {
+                    const orderDate = new Date(order.date);
+                    const cutoffDate = new Date();
+                    cutoffDate.setDate(cutoffDate.getDate() - parseInt(dateFilter));
+                    
+                    if (orderDate < cutoffDate) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+            
+            renderOrders();
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function viewOrderDetails(orderId) {
+            const order = allOrders.find(o => o.orderId === orderId);
+            if (order) {
+                alert(`Order Details:\n\nOrder ID: ${order.orderId}\nDate: ${formatDate(order.date)}\nStatus: ${capitalizeFirst(order.status)}\nTotal: $${order.total.toFixed(2)}\nPayment: ${order.paymentMethod}`);
+            }
+        }
+
+        function reorderItems(orderId) {
+            const order = allOrders.find(o => o.orderId === orderId);
+            if (order) {
+                if (confirm(`Add all items from order ${orderId} to your cart?`)) {
+                    alert('Items added to cart!');
+                    // In a real app, this would add items to the cart
+                }
+            }
+        }
+
+        function cancelOrder(orderId) {
+            if (confirm(`Are you sure you want to cancel order ${orderId}?`)) {
+                const orderIndex = allOrders.findIndex(o => o.orderId === orderId);
+                if (orderIndex !== -1) {
+                    allOrders[orderIndex].status = 'cancelled';
+                    localStorage.setItem('orders', JSON.stringify(allOrders));
+                    filterOrders();
+                    alert('Order cancelled successfully.');
+                }
+            }
+        }
+
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                menuIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+            });
+
+            // Load orders on page load
+            loadOrders();
+        });
+    </script>
+</body>
+
+</html>

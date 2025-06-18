@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ClothIn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <style>
+      html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'MontSerrat', sans-serif;
+            overflow: clip;
+        }
+
+        .hidden-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .visible-section {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sticky {
+            transition: all 0.3s ease;
+        }
+
+        .sticky.scrolled {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .hidden-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-gray-700);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--color-gray-300);
+            border-radius: 0.375rem;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-blue-500);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25);
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--color-blue-500);
+            color: white;
+            font-weight: 500;
+            text-align: center;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-blue-600);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--color-gray-300);
+        }
+
+        .auth-divider-text {
+            padding: 0 1rem;
+            color: var(--color-gray-500);
+        }
+
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border: 1px solid var(--color-gray-300);
+            border-radius: 0.375rem;
+            background-color: white;
+            color: var(--color-gray-700);
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        .social-btn:hover {
+            background-color: var(--color-gray-100);
+        }
+    </style>
+</head>
+
+<body>
+    <header id="navbar" class="sticky top-0 z-40 bg-white shadow-black">
+        <div class="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <nav class="hidden lg:flex items-center gap-6">
+                <a href="index.html#testimonials"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Testimonials</a>
+                <a href="index.html#features"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Features</a>
+                <a href="archive.html"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Blog</a>
+                <a href="catalog.html"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Shop</a>
+            </nav>
+
+            <div class="text-center">
+                <a href="index.html" class="nav-link"><span
+                        class="text-2xl sm:text-4xl font-bold me-70">ClothIn.</span></a>
+            </div>
+
+            <div class="flex items-center justify-end gap-4">
+                <a href="login.html"
+                    class="hidden lg:inline-block text-sm font-medium text-blue-500 hover:text-blue-600">
+                    Log in
+                </a>
+                <a href="register.html"
+                    class="hidden lg:inline-block text-sm font-medium bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md">
+                    Sign up
+                </a>
+
+                <button id="mobile-menu-button"
+                    class="lg:hidden p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:ring-2">
+                    <span class="sr-only">Open main menu</span>
+                    <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg id="close-icon" class="hidden h-6 w-6" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="ml-auto">
+            <div id="mobile-menu" class="hidden lg:hidden px-4 bg-white shadow-lg">
+                <a href="index.html#testimonials"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Testimonials</a>
+                <a href="index.html#features"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Features</a>
+                <a href="archive.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Blog</a>
+                <a href="catalog.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Shop</a>
+                <div class="px-3 py-2">
+                    <a href="login.html" class="block text-center py-2 text-blue-500 hover:text-blue-600">Log in</a>
+                    <a href="register.html"
+                        class="block w-full bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md text-center">Sign
+                        up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        <section class="py-12 md:py-20 bg-blue-500/3 relative">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-3xl mx-auto text-center mb-12">
+                    <h1 class="text-3xl md:text-4xl font-bold mb-4">Welcome Back</h1>
+                    <p class="text-lg text-gray-600">
+                        Log in to your ClothIn account to continue your sustainable fashion journey.
+                    </p>
+                </div>
+
+                <div class="form-container">
+                    <div class="social-login">
+                        <button class="social-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+                            </svg>
+                            Google
+                        </button>
+                        <button class="social-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#1877F2">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                            Facebook
+                        </button>
+                    </div>
+
+                    <div class="auth-divider">
+                        <span class="auth-divider-text">or login with email</span>
+                    </div>
+
+                    <form action="catalog.html" method="GET">
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" name="password" class="form-input" required>
+                        </div>
+
+                        <div class="flex justify-between items-center mb-6">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="text-blue-500 hover:underline">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-block">Log In</button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p>Don't have an account? <a href="register.html" class="text-blue-500 hover:underline">Sign up</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute inset-0 pointer-events-none z-0 mix-blend-overlay blur-sm">
+                <div class="absolute -top-32 left-0 w-0 h-0 border-l-[160px] border-b-[170px] border-l-transparent border-b-blue-300 opacity-30"></div>
+                <div class="absolute top-10 left-38 w-40 h-40 bg-blue-300/30 rounded-full"></div>
+                <div class="absolute top-9 left-2 w-0 h-0 border-l-[160px] border-b-[170px] border-l-transparent border-b-blue-300 opacity-30 rotate-90"></div>
+                <div class="absolute bottom-28 right-40 w-0 h-0 border-l-[160px] border-b-[170px] border-l-transparent border-b-blue-300 opacity-30"></div>
+                <div class="absolute -bottom-13 right-39 w-0 h-0 border-l-[160px] border-b-[170px] border-l-transparent border-b-blue-300 opacity-30 rotate-90"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-300 z-40 relative">
+        <div class="container mx-auto px-4 sm:px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">About Us</h3>
+                    <p class="mb-4">
+                        We're on a mission to make fashion more sustainable and affordable through our pre-loved clothing marketplace.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                            </svg>
+                            <span class="sr-only">Facebook</span>
+                        </a>
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                            </svg>
+                            <span class="sr-only">Twitter</span>
+                        </a>
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01" />
+                            </svg>
+                            <span class="sr-only">Instagram</span>
+                        </a>
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span class="sr-only">LinkedIn</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="index.html" class="hover:text-white transition-colors">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#features" class="hover:text-white transition-colors nav-link">
+                                Features
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#testimonials" class="hover:text-white transition-colors nav-link">
+                                Testimonials
+                            </a>
+                        </li>
+                        <li>
+                            <a href="archive.html" class="hover:text-white transition-colors nav-link">
+                                Blog
+                            </a>
+                        </li>
+                        <li>
+                            <a href="catalog.html" class="hover:text-white transition-colors nav-link">
+                                Shop
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Help Center
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Seller Guidelines
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Buyer Protection
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Sustainability
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Privacy Policy
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 mt-0.5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span>support@clothin.com</span>
+                        </li>
+                        <li>
+                            <p>Karah Indah VI BLok D 28</p>
+                            <p>surabaya, Jambangan</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm">
+                <p>&copy; 2025 Clothin. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+        class="back-to-top p-2 rounded-full bg-blue-500 text-white shadow-md hover:bg-blue-500/90">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //menu mobile
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                menuIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+            });
+
+            // scroll smooth tap navbar
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').includes('#')) {
+                        e.preventDefault();
+
+                        if (!mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                            menuIcon.classList.remove('hidden');
+                            closeIcon.classList.add('hidden');
+                        }
+
+                        const targetId = this.getAttribute('href').split('#')[1];
+                        const targetElement = document.getElementById(targetId);
+
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // heaader sticky untuk shadow
+            const header = document.getElementById('navbar');
+            const headerObserver = new IntersectionObserver((entries) => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            headerObserver.observe(header);
+
+            window.addEventListener('scroll', function() {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            // tombol keatas
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('active');
+                } else {
+                    backToTopButton.classList.remove('active');
+                }
+            });
+
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Future of Sustainable Fashion - ClothIn?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <style>
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'MontSerrat', sans-serif;
+            overflow: clip;
+        }
+
+        .hidden-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .visible-section {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sticky {
+            transition: all 0.3s ease;
+        }
+
+        .sticky.scrolled {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .article-card {
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 500;
+            background-color: var(--color-blue-100);
+            color: var(--color-blue-600);
+            transition: all 0.3s ease;
+        }
+
+        .category-badge:hover {
+            background-color: var(--color-blue-500);
+            color: white;
+        }
+
+        .article-content {
+            line-height: 1.8;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content ul {
+            list-style-type: disc;
+        }
+
+        .article-content ol {
+            list-style-type: decimal;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid var(--color-blue-500);
+            padding-left: 1rem;
+            font-style: italic;
+            margin: 1.5rem 0;
+        }
+
+        .article-content img {
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .share-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 9999px;
+            background-color: var(--color-gray-100);
+            color: var(--color-gray-700);
+            transition: all 0.3s ease;
+        }
+
+        .share-button:hover {
+            background-color: var(--color-blue-500);
+            color: white;
+        }
+
+        .author-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .table-of-contents {
+            background-color: var(--color-blue-50);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .table-of-contents ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .table-of-contents li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .table-of-contents li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--color-blue-500);
+        }
+
+        .table-of-contents a {
+            color: var(--color-gray-700);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .table-of-contents a:hover {
+            color: var(--color-blue-500);
+        }
+    </style>
+</head>
+
+<body>
+    <header id="navbar" class="sticky top-0 z-40 bg-white shadow-black">
+        <div class="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <nav class="hidden lg:flex items-center gap-6">
+                <a href="index.html#testimonials"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Testimonials</a>
+                <a href="index.html#features"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Features</a>
+                <a href="archive.html"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Blog</a>
+                <a href="index.html#contact"
+                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Contact</a>
+            </nav>
+
+            <div class="text-center">
+                <a href="landing.html" class="nav-link"><span
+                        class="text-2xl sm:text-4xl font-bold me-70">ClothIn.</span></a>
+            </div>
+
+            <div class="flex items-center justify-end gap-4">
+                <button
+                    class="hidden lg:inline-block text-sm font-medium bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md">
+                    Get Started
+                </button>
+
+                <button id="mobile-menu-button"
+                    class="lg:hidden p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:ring-2">
+                    <span class="sr-only">Open main menu</span>
+                    <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg id="close-icon" class="hidden h-6 w-6" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="ml-auto">
+            <div id="mobile-menu" class="hidden lg:hidden px-4 bg-white shadow-lg">
+                <a href="index.html#testimonials"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Testimonials</a>
+                <a href="index.html#features"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Features</a>
+                <a href="archive.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Blog</a>
+                <a href="index.html#contact"
+                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Contact</a>
+                <div class="px-3 py-2">
+                    <button class="w-full bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md">Get
+                        Started</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        <!-- Article Hero -->
+        <section class="py-12 md:py-24 bg-blue-500/3 relative">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex items-center text-sm text-gray-500 mb-4">
+                        <a href="arsip.html" class="flex items-center hover:text-blue-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            Back to Articles
+                        </a>
+                        <span class="mx-2">•</span>
+                        <span>May 15, 2025</span>
+                        <span class="mx-2">•</span>
+                        <span>8 min read</span>
+                        <span class="mx-2">•</span>
+                        <span class="category-badge">Sustainable Fashion</span>
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-bold mb-6">The Future of Sustainable Fashion: How Secondhand Clothing is Changing the Industry</h1>
+                    <div class="flex items-center mb-8">
+                        <div class="author-avatar mr-4">
+                            <img src="images/testi1.jpg" alt="Author" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p class="font-semibold">Nadhiva Maulidya</p>
+                            <p class="text-sm text-gray-500">Fashion Editor at ClothIn</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute inset-0 pointer-events-none -z-10 mix-blend-overlay blur-sm">
+                <div
+                    class="absolute top-28 left-40 w-0 h-0 border-l-[160px] border-b-[170px] border-l-transparent border-b-blue-300 opacity-30">
+                </div>
+                <div
+                    class="absolute -top-13 left-39 w-0 h-0 border-l-[160px] border-b-[170px] border-l-transparent border-b-blue-300 opacity-30 rotate-90">
+                </div>
+                <div class="absolute top-75 left-40 w-40 h-40 bg-blue-300/30 rounded-full"></div>
+                <div class="absolute top-30 -left-2 w-40 h-40 bg-blue-300/30 rounded-24"></div>
+            </div>
+        </section>
+
+        <!-- Featured Image -->
+        <section class="py-8">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="aspect-video rounded-xl overflow-hidden">
+                        <img src="images/blog1.jpg" alt="Sustainable Fashion" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Content -->
+        <section class="py-12">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <!-- Sidebar -->
+                        <div class="w-full md:w-1/4">
+                            <div class="sticky top-24">
+                                <!-- Share Buttons -->
+                                <div class="mb-8">
+                                    <h3 class="text-lg font-semibold mb-4">Share</h3>
+                                    <div class="flex space-x-2">
+                                        <a href="#" class="share-button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="share-button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="share-button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="share-button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Table of Contents -->
+                                <div class="table-of-contents">
+                                    <h3 class="text-lg font-semibold mb-4">Table of Contents</h3>
+                                    <ul>
+                                        <li><a href="#introduction">Introduction</a></li>
+                                        <li><a href="#rise-of-secondhand">The Rise of Secondhand Fashion</a></li>
+                                        <li><a href="#environmental-impact">Environmental Impact</a></li>
+                                        <li><a href="#economic-benefits">Economic Benefits</a></li>
+                                        <li><a href="#technology-role">The Role of Technology</a></li>
+                                        <li><a href="#future-trends">Future Trends</a></li>
+                                        <li><a href="#conclusion">Conclusion</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Content -->
+                        <div class="w-full md:w-3/4">
+                            <div class="article-content">
+                                <h2 id="introduction">Introduction</h2>
+                                <p>
+                                    The fashion industry has long been known for its significant environmental footprint. From water pollution and textile waste to carbon emissions and labor concerns, traditional fashion production and consumption patterns have raised serious sustainability questions. However, a powerful shift is underway, driven by conscious consumers and innovative platforms that are giving pre-loved clothing a second life.
+                                </p>
+                                <p>
+                                    Secondhand clothing is no longer relegated to thrift stores with musty odors and disorganized racks. Today, it's a booming market with sophisticated online platforms, curated selections, and a growing acceptance among fashion-forward consumers of all demographics. This article explores how the secondhand clothing movement is reshaping the fashion industry and creating a more sustainable future.
+                                </p>
+
+                                <h2 id="rise-of-secondhand">The Rise of Secondhand Fashion</h2>
+                                <p>
+                                    The secondhand clothing market has experienced explosive growth in recent years. According to ThredUp's 2024 Resale Report, the global secondhand apparel market is projected to reach $218 billion by 2026, growing 127% faster than the overall retail clothing sector. This remarkable growth is being driven by several factors:
+                                </p>
+                                <ul>
+                                    <li>Increasing environmental awareness among consumers</li>
+                                    <li>The desire for unique, one-of-a-kind pieces that stand out from mass-produced fashion</li>
+                                    <li>Economic considerations, as secondhand items typically cost 40-80% less than new</li>
+                                    <li>The rise of online platforms and apps that make buying and selling used clothing easier than ever</li>
+                                    <li>Changing attitudes toward ownership, with more consumers embracing circular economy principles</li>
+                                </ul>
+                                <p>
+                                    Platforms like ClothIn are at the forefront of this revolution, creating user-friendly marketplaces where individuals can buy and sell pre-loved clothing with ease. These platforms have removed much of the friction traditionally associated with secondhand shopping, offering searchable inventories, secure payment systems, and shipping solutions.
+                                </p>
+
+                                <h2 id="environmental-impact">Environmental Impact</h2>
+                                <p>
+                                    The environmental benefits of extending the life of clothing through resale are substantial. The fashion industry is responsible for an estimated 8-10% of global carbon emissions and nearly 20% of global wastewater. By keeping clothing in circulation longer, we can significantly reduce these impacts.
+                                </p>
+                                <p>
+                                    Research indicates that extending the active life of clothing by just nine months can reduce its carbon, water, and waste footprints by 20-30%. When a garment is resold instead of discarded, all the resources that would have gone into producing a new replacement item are saved.
+                                </p>
+                                <blockquote>
+                                    "Every secondhand purchase is a vote for a more sustainable future. When you buy pre-loved clothing, you're not just getting a unique item at a great price—you're helping to reduce waste and carbon emissions while supporting a circular economy."
+                                </blockquote>
+
+                                <h2 id="economic-benefits">Economic Benefits</h2>
+                                <p>
+                                    The secondhand clothing market isn't just good for the planet—it's creating economic opportunities as well. For sellers, platforms like ClothIn provide a way to recoup value from unwanted items, effectively turning closet clutter into cash. For buyers, secondhand shopping offers access to quality brands at a fraction of the original price.
+                                </p>
+                                <p>
+                                    This democratization of fashion has made style more accessible across income levels. Designer pieces that might have been out of reach at retail prices become attainable in the secondhand market, allowing more people to express themselves through fashion without breaking the bank.
+                                </p>
+                                <p>
+                                    Additionally, the secondhand market is creating jobs in areas like authentication, logistics, photography, customer service, and platform development. As the sector continues to grow, so too will these employment opportunities.
+                                </p>
+
+                                <h2 id="technology-role">The Role of Technology</h2>
+                                <p>
+                                    Technology has been a key enabler of the secondhand clothing revolution. Advanced search algorithms help buyers find exactly what they're looking for among millions of listings. Authentication services use a combination of human expertise and AI to verify the legitimacy of luxury items. Mobile apps with intuitive interfaces make listing items for sale as simple as taking a few photos and answering basic questions.
+                                </p>
+                                <p>
+                                    Looking ahead, emerging technologies promise to make the secondhand experience even better:
+                                </p>
+                                <ul>
+                                    <li>Virtual try-on tools that let shoppers see how items might look on them</li>
+                                    <li>Blockchain for verifying the provenance and history of high-value items</li>
+                                    <li>AI-powered recommendations that suggest items based on personal style preferences</li>
+                                    <li>Automated pricing tools that help sellers set competitive yet fair prices</li>
+                                </ul>
+
+                                <h2 id="future-trends">Future Trends</h2>
+                                <p>
+                                    As the secondhand market continues to mature, several trends are emerging that will shape its future:
+                                </p>
+                                <ol>
+                                    <li><strong>Brand Involvement:</strong> More fashion brands are launching their own resale programs, recognizing the value in maintaining a relationship with their products throughout multiple ownership cycles.</li>
+                                    <li><strong>Rental-Resale Integration:</strong> The lines between clothing rental and resale are blurring, with some platforms offering both options to maximize flexibility for consumers.</li>
+                                    <li><strong>Specialized Marketplaces:</strong> While general platforms will continue to thrive, we're seeing the rise of niche marketplaces focused on specific categories like luxury, vintage, or athletic wear.</li>
+                                    <li><strong>Circular Design:</strong> Designers are increasingly creating garments with resale in mind, using durable materials and timeless styles that will maintain their value in the secondhand market.</li>
+                                </ol>
+
+                                <h2 id="conclusion">Conclusion</h2>
+                                <p>
+                                    The secondhand clothing movement represents a fundamental shift in how we think about fashion. By extending the lifespan of garments and keeping them in circulation, we can significantly reduce the environmental impact of the fashion industry while creating economic opportunities and making style more accessible.
+                                </p>
+                                <p>
+                                    Platforms like ClothIn are at the heart of this transformation, providing the infrastructure needed to connect buyers and sellers in a seamless marketplace. As technology continues to evolve and consumer preferences shift toward sustainability, the secondhand market is poised for continued growth and innovation.
+                                </p>
+                                <p>
+                                    Whether you're motivated by environmental concerns, budget considerations, or the thrill of finding unique pieces, participating in the secondhand clothing economy is a win for your wallet, your wardrobe, and the world.
+                                </p>
+                            </div>
+
+                            <!-- Author Bio -->
+                            <div class="mt-12 p-6 bg-blue-50 rounded-lg">
+                                <div class="flex items-start">
+                                    <div class="author-avatar mr-4 flex-shrink-0">
+                                        <img src="images/testi1.jpg" alt="Author" class="w-full h-full object-cover">
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg mb-2">About the Author</h3>
+                                        <p class="font-semibold">Nadhiva Maulidya</p>
+                                        <p class="text-sm text-gray-500 mb-3">Fashion Editor at ClothIn</p>
+                                        <p class="text-gray-600">
+                                            Nadhiva has been covering sustainable fashion trends for over 5 years. With a background in environmental science and fashion journalism, she is passionate about promoting ethical and sustainable practices in the fashion industry. When she's not writing, Nadhiva can be found exploring thrift stores and vintage markets for unique fashion finds.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tags -->
+                            <div class="mt-8">
+                                <h3 class="font-semibold mb-3">Tags</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="#" class="category-badge">Sustainable Fashion</a>
+                                    <a href="#" class="category-badge">Secondhand Clothing</a>
+                                    <a href="#" class="category-badge">Eco-Friendly</a>
+                                    <a href="#" class="category-badge">Fashion Industry</a>
+                                    <a href="#" class="category-badge">Circular Economy</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Articles -->
+        <section class="py-12 bg-blue-500/3 hidden-section">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-2xl font-bold mb-8">Related Articles</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Related Article 1 -->
+                        <div class="article-card overflow-hidden border-0 shadow-md rounded-lg bg-white">
+                            <div class="aspect-square">
+                                <img src="images/blog2.jpg" alt="Thrift Guide" class="w-full h-full object-cover" />
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center text-sm text-gray-500 mb-3">
+                                    <span>Apr 5, 2025</span>
+                                    <span class="mx-2">•</span>
+                                    <span>6 min read</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">The Ultimate Guide to Thrifting Like a Pro</h3>
+                                <p class="text-gray-600 mb-4">Master the art of secondhand shopping with tips on finding
+                                    gems, knowing value, and shopping sustainably.</p>
+                                <a href="article.html" class="text-blue-500 font-medium flex items-center hover:underline">
+                                    Read More
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Related Article 2 -->
+                        <div class="article-card overflow-hidden border-0 shadow-md rounded-lg bg-white">
+                            <div class="aspect-square">
+                                <img src="images/blog3.jpg" alt="Eco Fashion Tips" class="w-full h-full object-cover" />
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center text-sm text-gray-500 mb-3">
+                                    <span>Mar 28, 2025</span>
+                                    <span class="mx-2">•</span>
+                                    <span>5 min read</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">How Clothin is Changing the Way We Shop</h3>
+                                <p class="text-gray-600 mb-4">Explore how buying and selling preloved clothing is making
+                                    fashion more affordable and sustainable for everyone.</p>
+                                <a href="article.html" class="text-blue-500 font-medium flex items-center hover:underline">
+                                    Read More
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Related Article 3 -->
+                        <div class="article-card overflow-hidden border-0 shadow-md rounded-lg bg-white">
+                            <div class="aspect-square">
+                                <img src="images/blog1.jpg" alt="Capsule Wardrobe" class="w-full h-full object-cover" />
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center text-sm text-gray-500 mb-3">
+                                    <span>Mar 15, 2025</span>
+                                    <span class="mx-2">•</span>
+                                    <span>5 min read</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">Building a Capsule Wardrobe with Secondhand Pieces</h3>
+                                <p class="text-gray-600 mb-4">Learn how to create a versatile, timeless wardrobe using only pre-loved clothing items that will last for years.</p>
+                                <a href="article.html" class="text-blue-500 font-medium flex items-center hover:underline">
+                                    Read More
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comment Section -->
+        <section class="py-12 hidden-section">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-2xl font-bold mb-8">Comments (3)</h2>
+                    
+                    <!-- Comment Form -->
+                    <div class="mb-12">
+                        <h3 class="text-xl font-semibold mb-4">Leave a Comment</h3>
+                        <form class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                    <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="comment" class="block text-sm font-medium text-gray-700 mb-1">Comment</label>
+                                <textarea id="comment" name="comment" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="px-6 py-3 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 transition-colors">
+                                    Post Comment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Comments List -->
+                    <div class="space-y-8">
+                        <!-- Comment 1 -->
+                        <div class="border-b border-gray-200 pb-8">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
+                                    <img src="images/testi2.jpg" alt="Commenter" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <div class="flex items-center mb-2">
+                                        <h4 class="font-semibold">Reynaldi Susilo</h4>
+                                        <span class="mx-2 text-gray-400">•</span>
+                                        <span class="text-sm text-gray-500">May 16, 2025</span>
+                                    </div>
+                                    <p class="text-gray-700 mb-3">
+                                        Great article! I've been selling my clothes on Clothin for about 6 months now and it's been such a rewarding experience. Not only am I making some extra cash, but I love knowing my clothes are getting a second life instead of ending up in a landfill.
+                                    </p>
+                                    <button class="text-blue-500 text-sm font-medium hover:underline">Reply</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Comment 2 -->
+                        <div class="border-b border-gray-200 pb-8">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
+                                    <img src="images/testi3.jpg" alt="Commenter" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <div class="flex items-center mb-2">
+                                        <h4 class="font-semibold">Labada Labidi</h4>
+                                        <span class="mx-2 text-gray-400">•</span>
+                                        <span class="text-sm text-gray-500">May 15, 2025</span>
+                                    </div>
+                                    <p class="text-gray-700 mb-3">
+                                        I'd love to see more articles about how to properly care for secondhand clothing to extend its life even further. Do you have any tips for refreshing vintage pieces without damaging them?
+                                    </p>
+                                    <button class="text-blue-500 text-sm font-medium hover:underline">Reply</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Reply -->
+                            <div class="flex items-start mt-6 ml-16">
+                                <div class="w-10 h-10 rounded-full overflow-hidden mr-4 flex-shrink-0">
+                                    <img src="images/testi1.jpg" alt="Author" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <div class="flex items-center mb-2">
+                                        <h4 class="font-semibold">Nadhiva Maulidya</h4>
+                                        <span class="mx-2 text-gray-400">•</span>
+                                        <span class="text-sm text-gray-500">May 15, 2025</span>
+                                    </div>
+                                    <p class="text-gray-700 mb-3">
+                                        Great suggestion, Labada! We're actually working on a comprehensive guide for caring for vintage and secondhand clothing that should be published next week. Stay tuned!
+                                    </p>
+                                    <button class="text-blue-500 text-sm font-medium hover:underline">Reply</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Comment 3 -->
+                        <div>
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
+                                    <img src="images/testi1.jpg" alt="Commenter" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <div class="flex items-center mb-2">
+                                        <h4 class="font-semibold">Hartono Budikusuma</h4>
+                                        <span class="mx-2 text-gray-400">•</span>
+                                        <span class="text-sm text-gray-500">May 14, 2025</span>
+                                    </div>
+                                    <p class="text-gray-700 mb-3">
+                                        The statistics about the environmental impact of the fashion industry are eye-opening. I had no idea that extending a garment's life by just 9 months could reduce its footprint by up to 30%. This article has definitely motivated me to shop more mindfully.
+                                    </p>
+                                    <button class="text-blue-500 text-sm font-medium hover:underline">Reply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="py-20 bg-blue-500/3 hidden-section">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-3xl font-bold mb-4">Stay Updated</h2>
+                    <p class="text-lg text-gray-600 mb-8">
+                        Subscribe to our newsletter to receive the latest fashion tips, sustainable style guides, and exclusive offers.
+                    </p>
+                    <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                        <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                        <button type="submit" class="px-6 py-3 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 transition-colors">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-300 z-40 relative">
+        <div class="container mx-auto px-4 sm:px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">About Us</h3>
+                    <p class="mb-4">
+                        We're on a mission to help businesses thrive in the digital age with innovative solutions and
+                        exceptional
+                        support.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                            </svg>
+                            <span class="sr-only">Facebook</span>
+                        </a>
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                            </svg>
+                            <span class="sr-only">Twitter</span>
+                        </a>
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01" />
+                            </svg>
+                            <span class="sr-only">Instagram</span>
+                        </a>
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span class="sr-only">LinkedIn</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="index.html" class="hover:text-white transition-colors">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#features" class="hover:text-white transition-colors nav-link">
+                                Features
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#testimonials" class="hover:text-white transition-colors nav-link">
+                                Testimonials
+                            </a>
+                        </li>
+                        <li>
+                            <a href="archive.html" class="hover:text-white transition-colors nav-link">
+                                Blog
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#contact" class="hover:text-white transition-colors nav-link">
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Documentation
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Help Center
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Case Studies
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                API Reference
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-white transition-colors">
+                                Privacy Policy
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 mt-0.5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span>nauvalaryanto2005@gmail.com</span>
+                        </li>
+                        <li>
+                            <p>Karah Indah VI BLok D 28</p>
+                            <p>surabaya, Jambangan</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm">
+                <p>&copy; 2025 Clothin. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+        class="back-to-top p-2 rounded-full bg-blue-500 text-white shadow-md hover:bg-blue-500/90">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //menu mobile
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                menuIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+            });
+
+            // scroll smooth tap navbar
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').includes('#')) {
+                        e.preventDefault();
+
+                        if (!mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                            menuIcon.classList.remove('hidden');
+                            closeIcon.classList.add('hidden');
+                        }
+
+                        const targetId = this.getAttribute('href').split('#')[1];
+                        const targetElement = document.getElementById(targetId);
+
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Table of contents smooth scroll
+            document.querySelectorAll('.table-of-contents a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // animasi saat scroll
+            const sections = document.querySelectorAll('.hidden-section');
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible-section');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            // heaader sticky untuk shadow
+            const header = document.getElementById('navbar');
+            const headerObserver = new IntersectionObserver((entries) => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            headerObserver.observe(header);
+
+            window.addEventListener('scroll', function() {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            // tombol keatas
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('active');
+                } else {
+                    backToTopButton.classList.remove('active');
+                }
+            });
+
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
