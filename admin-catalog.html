@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Management - ClothIn Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .admin-layout {
+      display: flex;
+      min-height: 100vh;
+      background-color: #F9FAFB;
+    }
+
+    .admin-sidebar {
+      width: 250px;
+      background-color: #2563EB;
+      color: white;
+      padding: 2rem 0;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 30;
+    }
+
+    .admin-content {
+      flex: 1;
+      margin-left: 250px;
+    }
+
+    .admin-header {
+      background-color: white;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #E5E7EB;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .admin-main {
+      padding: 2rem;
+    }
+
+    .sidebar-brand {
+      padding: 0 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 2rem;
+    }
+
+    .sidebar-brand h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-item {
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-left: 3px solid white;
+    }
+
+    .nav-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-right: 0.75rem;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1F2937;
+    }
+
+    .page-subtitle {
+      color: #4B5563;
+    }
+
+    .btn-primary {
+      background-color: #2563EB;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover {
+      background-color: #1D4ED8;
+    }
+
+    .filters-bar {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 250px;
+      padding: 0.75rem 1rem;
+      border: 1px solid #D1D5DB;
+      border-radius: 0.375rem;
+      font-family: inherit;
+    }
+
+    .filter-select {
+      padding: 0.75rem 1rem;
+      border: 1px solid #D1D5DB;
+      border-radius: 0.375rem;
+      background-color: white;
+      font-family: inherit;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .product-content {
+      padding: 1.5rem;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .product-status {
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .status-available {
+      background-color: #D1FAE5;
+      color: #047857;
+    }
+
+    .status-sold {
+      background-color: #FEE2E2;
+      color: #B91C1C;
+    }
+
+    .status-draft {
+      background-color: #FEF3C7;
+      color: #92400E;
+    }
+
+    .product-price-display {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #3B82F6;
+    }
+
+    .product-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .product-category-display {
+      color: #4B5563;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      margin-top: 1rem;
+    }
+
+    .btn-sm {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.875rem;
+      border-radius: 0.25rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+      background-color: #3B82F6;
+      color: white;
+    }
+
+    .btn-edit:hover {
+      background-color: #2563EB;
+    }
+
+    .btn-delete {
+      background-color: #EF4444;
+      color: white;
+    }
+
+    .btn-delete:hover {
+      background-color: #DC2626;
+    }
+
+    .btn-view {
+      background-color: #6B7280;
+      color: white;
+    }
+
+    .btn-view:hover {
+      background-color: #4B5563;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1F2937;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #6B7280;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #D1D5DB;
+      border-radius: 0.375rem;
+      font-family: inherit;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #3B82F6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+
+    .btn-secondary {
+      background-color: #E5E7EB;
+      color: #374151;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.375rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background-color: #D1D5DB;
+    }
+
+    .admin-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .admin-avatar {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: #3B82F6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #2563EB;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .pagination-btn {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #D1D5DB;
+      background-color: white;
+      color: #374151;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pagination-btn:hover,
+    .pagination-btn.active {
+      background-color: #3B82F6;
+      color: white;
+      border-color: #3B82F6;
+    }
+
+    .message-box {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1001;
+      text-align: center;
+    }
+
+    .message-box-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .message-box h3 {
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    .message-box p {
+      margin-bottom: 1.5rem;
+      color: #4B5563;
+    }
+
+    .message-box button {
+      background-color: #3B82F6;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .message-box button:hover {
+      background-color: #2563EB;
+    }
+
+    @media (max-width: 768px) {
+      .admin-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .admin-sidebar.open {
+        transform: translateX(0);
+      }
+
+      .admin-content {
+        margin-left: 0;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .filters-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-input {
+        min-width: auto;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="sidebar-brand">
+        <h2>ClothIn Admin</h2>
+      </div>
+      <nav>
+        <ul class="sidebar-nav">
+          <li class="nav-item">
+            <a href="admin-dashboard.html" class="nav-link">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="admin-users.html" class="nav-link">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              Users
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="admin-articles.html" class="nav-link">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+              </svg>
+              Articles
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="admin-transactions.html" class="nav-link">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Transactions
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="admin-catalog.html" class="nav-link active">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              Products
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="landing.html" class="nav-link">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Back to Site
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="admin-content">
+      <header class="admin-header">
+        <div class="flex items-center gap-4">
+          <button class="mobile-menu-btn" onclick="toggleSidebar()">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <div>
+            <h1 class="page-title">Product Management</h1>
+            <p class="page-subtitle">Manage products available on ClothIn</p>
+          </div>
+        </div>
+        <div class="admin-profile">
+          <div class="admin-avatar">A</div>
+          <div>
+            <div class="font-semibold">Admin User</div>
+            <div class="text-sm text-gray-600">Administrator</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="admin-main">
+        <div class="page-header">
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Products</h2>
+            <p class="text-gray-600">Total products: <span id="totalProductsCount">0</span></p>
+            <p class="text-gray-600 text-sm">User ID: <span id="currentUserId">N/A (Dummy)</span></p>
+          </div>
+          <button class="btn-primary" onclick="openAddProductModal()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Add Product
+          </button>
+        </div>
+
+        <div class="filters-bar">
+          <input type="text" class="search-input" placeholder="Search products..." id="searchInput"
+            onkeyup="filterProducts()">
+          <select class="filter-select" id="statusFilter" onchange="filterProducts()">
+            <option value="">All Status</option>
+            <option value="available">Available</option>
+            <option value="sold">Sold</option>
+            <option value="draft">Draft</option>
+          </select>
+          <select class="filter-select" id="categoryFilter" onchange="filterProducts()">
+            <option value="">All Categories</option>
+            <option value="women-clothing">Women's Clothing</option>
+            <option value="men-clothing">Men's Clothing</option>
+            <option value="accessories">Accessories</option>
+            <option value="shoes">Shoes</option>
+          </select>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+        </div>
+
+        <div class="pagination">
+          <button class="pagination-btn" onclick="changePage(-1)">Previous</button>
+          <div id="pagination-numbers" class="flex gap-1">
+          </div>
+          <button class="pagination-btn" onclick="changePage(1)">Next</button>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Add New Product</h3>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <form id="productForm">
+        <div class="form-group">
+          <label class="form-label">Product Name</label>
+          <input type="text" class="form-input" id="productName" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-input" id="productCategory" required>
+            <option value="">Select Category</option>
+            <option value="women-clothing">Women's Clothing</option>
+            <option value="men-clothing">Men's Clothing</option>
+            <option value="accessories">Accessories</option>
+            <option value="shoes">Shoes</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" id="productDescription" placeholder="Detailed description of the product"
+            required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Price ($)</label>
+          <input type="number" step="0.01" class="form-input" id="productPrice" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Condition</label>
+          <select class="form-input" id="productCondition" required>
+            <option value="">Select Condition</option>
+            <option value="new-with-tags">New with tags</option>
+            <option value="new-without-tags">New without tags</option>
+            <option value="excellent">Excellent</option>
+            <option value="very-good">Very Good</option>
+            <option value="good">Good</option>
+            <option value="fair">Fair</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Image URL</label>
+          <input type="url" class="form-input" id="productImage" placeholder="https://example.com/image.jpg">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Stock Quantity</label>
+          <input type="number" class="form-input" id="productStock" required min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-input" id="productStatus" required>
+            <option value="draft">Draft</option>
+            <option value="available">Available</option>
+            <option value="sold">Sold</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="messageBoxOverlay" class="message-box-overlay"></div>
+  <div id="messageBox" class="message-box">
+    <h3 id="messageBoxTitle"></h3>
+    <p id="messageBoxContent"></p>
+    <button onclick="closeMessageBox()">OK</button>
+  </div>
+
+  <script>
+    let products = [
+      {
+        id: 1,
+        name: "Vintage Levi's Denim Jacket",
+        category: "women-clothing",
+        description: "A timeless piece with authentic vintage wash.",
+        price: 45.99,
+        condition: "excellent",
+        image: "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?q=80&w=1938&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        stock: 5,
+        status: "available"
+      },
+      {
+        id: 2,
+        name: "Cashmere Turtleneck Sweater",
+        category: "women-clothing",
+        description: "Soft and warm cashmere sweater, perfect for winter.",
+        price: 65.00,
+        condition: "very-good",
+        image: "http://images.unsplash.com/photo-1631541909061-71e349d1f203?q=80&w=2010&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        stock: 2,
+        status: "available"
+      },
+      {
+        id: 3,
+        name: "Vintage Leather Crossbody Bag",
+        category: "accessories",
+        description: "Classic leather bag with adjustable strap.",
+        price: 79.99,
+        condition: "good",
+        image: "https://plus.unsplash.com/premium_photo-1705554519595-c1143c7fef97?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        stock: 1,
+        status: "sold"
+      },
+      {
+        id: 4,
+        name: "Men's Classic Wool Coat",
+        category: "men-clothing",
+        description: "Elegant wool coat for formal or casual wear.",
+        price: 120.00,
+        condition: "excellent",
+        image: "https://images.unsplash.com/photo-1594938299270-bb431fa2ee6d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        stock: 3,
+        status: "available"
+      },
+      {
+        id: 5,
+        name: "Unisex Sneakers",
+        category: "shoes",
+        description: "Comfortable and stylish sneakers for everyday use.",
+        price: 35.50,
+        condition: "new-without-tags",
+        image: "https://images.unsplash.com/photo-1552066371-dc0297920365?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        stock: 10,
+        status: "available"
+      },
+      {
+        id: 6,
+        name: "Summer Floral Dress",
+        category: "women-clothing",
+        description: "Lightweight and airy floral dress for summer.",
+        price: 28.00,
+        condition: "good",
+        image: "https://images.unsplash.com/photo-1549060279-7e168f8d7237?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        stock: 0,
+        status: "sold"
+      },
+      {
+        id: 7,
+        name: "Striped T-Shirt",
+        category: "men-clothing",
+        description: "Casual striped t-shirt made from organic cotton.",
+        price: 18.00,
+        condition: "new-with-tags",
+        image: "https://images.unsplash.com/photo-1521572178382-bda50dc4924c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        stock: 7,
+        status: "available"
+      },
+      {
+        id: 8,
+        name: "Gold Hoop Earrings",
+        category: "accessories",
+        description: "Elegant gold plated hoop earrings.",
+        price: 15.00,
+        condition: "new-with-tags",
+        image: "https://images.unsplash.com/photo-1627063169724-c10006323145?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        stock: 10,
+        status: "available"
+      }
+    ];
+
+    let filteredProducts = [...products];
+    let currentPage = 1;
+    let productsPerPage = 6;
+    let editingProductId = null;
+    let currentUserId = "ADMIN_DUMMY_ID"; // Dummy user ID
+
+    function showMessageBox(title, message, isConfirm = false) {
+      return new Promise(resolve => {
+        const messageBoxTitle = document.getElementById('messageBoxTitle');
+        const messageBoxContent = document.getElementById('messageBoxContent');
+        const okButton = document.querySelector('#messageBox button');
+        const messageBox = document.getElementById('messageBox');
+        const messageBoxOverlay = document.getElementById('messageBoxOverlay');
+
+        messageBoxTitle.textContent = title;
+        messageBoxContent.textContent = message;
+        okButton.textContent = isConfirm ? 'Yes' : 'OK';
+        okButton.onclick = () => {
+          closeMessageBox();
+          resolve(true);
+        };
+
+        let cancelButton = document.getElementById('messageBoxCancelBtn');
+        if (cancelButton) {
+          cancelButton.remove();
+        }
+
+        if (isConfirm) {
+          cancelButton = document.createElement('button');
+          cancelButton.id = 'messageBoxCancelBtn';
+          cancelButton.textContent = 'No';
+          cancelButton.classList.add('ml-2', 'btn-secondary');
+          cancelButton.onclick = () => {
+            closeMessageBox();
+            resolve(false);
+          };
+          messageBox.appendChild(cancelButton);
+        }
+
+        messageBoxOverlay.style.display = 'block';
+        messageBox.style.display = 'block';
+      });
+    }
+
+    function closeMessageBox() {
+      document.getElementById('messageBoxOverlay').style.display = 'none';
+      document.getElementById('messageBox').style.display = 'none';
+      const cancelButton = document.getElementById('messageBoxCancelBtn');
+      if (cancelButton) {
+        cancelButton.remove();
+      }
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('productsGrid');
+      const startIndex = (currentPage - 1) * productsPerPage;
+      const endIndex = startIndex + productsPerPage;
+      const pageProducts = filteredProducts.slice(startIndex, endIndex);
+
+      grid.innerHTML = pageProducts.map(product => `
+                <div class="product-card rounded-lg">
+                    <img src="${product.image}" onerror="this.onerror=null;this.src='https://placehold.co/200x200/cccccc/ffffff?text=No+Image';" alt="${product.name}" class="product-image rounded-t-lg">
+                    <div class="product-content">
+                        <div class="product-meta">
+                            <span class="product-status status-${product.status}">
+                                ${product.status.charAt(0).toUpperCase() + product.status.slice(1)}
+                            </span>
+                            <span class="product-price-display">$${product.price ? product.price.toFixed(2) : '0.00'}</span>
+                        </div>
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-category-display">${product.category ? product.category.replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'N/A'}</p>
+                        <div class="product-actions">
+                            <button class="btn-sm btn-view rounded-md" onclick="viewProduct('${product.id}')">View</button>
+                            <button class="btn-sm btn-edit rounded-md" onclick="editProduct('${product.id}')">Edit</button>
+                            <button class="btn-sm btn-delete rounded-md" onclick="deleteProduct('${product.id}')">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+      document.getElementById('totalProductsCount').textContent = filteredProducts.length;
+      renderPagination();
+    }
+
+    function filterProducts() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const statusFilter = document.getElementById('statusFilter').value;
+      const categoryFilter = document.getElementById('categoryFilter').value;
+
+      filteredProducts = products.filter(product => {
+        const matchesSearch = (product.name && product.name.toLowerCase().includes(searchTerm)) ||
+          (product.description && product.description.toLowerCase().includes(searchTerm)) ||
+          (product.category && product.category.toLowerCase().includes(searchTerm));
+        const matchesStatus = !statusFilter || product.status === statusFilter;
+        const matchesCategory = !categoryFilter || product.category === categoryFilter;
+
+        return matchesSearch && matchesStatus && matchesCategory;
+      });
+
+      currentPage = 1;
+      renderProducts();
+    }
+
+    function renderPagination() {
+      const paginationNumbersDiv = document.getElementById('pagination-numbers');
+      const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+      paginationNumbersDiv.innerHTML = '';
+
+      for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.classList.add('pagination-btn', 'rounded-md');
+        if (i === currentPage) {
+          button.classList.add('active');
+        }
+        button.textContent = i;
+        button.onclick = () => {
+          currentPage = i;
+          renderProducts();
+        };
+        paginationNumbersDiv.appendChild(button);
+      }
+    }
+
+    function openAddProductModal() {
+      editingProductId = null;
+      document.getElementById('modalTitle').textContent = 'Add New Product';
+      document.getElementById('productForm').reset();
+      document.getElementById('productImage').value = 'https://placehold.co/200x200/cccccc/ffffff?text=No+Image';
+      document.getElementById('productModal').style.display = 'block';
+    }
+
+    function editProduct(productId) {
+      const product = products.find(p => p.id === productId);
+      if (product) {
+        editingProductId = productId;
+        document.getElementById('modalTitle').textContent = 'Edit Product';
+        document.getElementById('productName').value = product.name || '';
+        document.getElementById('productCategory').value = product.category || '';
+        document.getElementById('productDescription').value = product.description || '';
+        document.getElementById('productPrice').value = product.price || 0;
+        document.getElementById('productCondition').value = product.condition || '';
+        document.getElementById('productImage').value = product.image || 'https://placehold.co/200x200/cccccc/ffffff?text=No+Image';
+        document.getElementById('productStock').value = product.stock || 0;
+        document.getElementById('productStatus').value = product.status || 'draft';
+        document.getElementById('productModal').style.display = 'block';
+      } else {
+        showMessageBox('Error', 'Product not found.');
+      }
+    }
+
+    function viewProduct(productId) {
+      const product = products.find(p => p.id === productId);
+      if (product) {
+        showMessageBox(
+          'Product Details',
+          `Name: ${product.name || 'N/A'}\nCategory: ${product.category ? product.category.replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'N/A'}\nPrice: $${product.price ? product.price.toFixed(2) : '0.00'}\nCondition: ${product.condition ? product.condition.replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'N/A'}\nStock: ${product.stock || 0}\nStatus: ${product.status ? product.status.charAt(0).toUpperCase() + product.status.slice(1) : 'N/A'}\n\nDescription: ${product.description || 'N/A'}`
+        );
+      } else {
+        showMessageBox('Error', 'Product not found.');
+      }
+    }
+
+    async function deleteProduct(productId) {
+      const confirmDelete = await showMessageBox('Confirm Delete', 'Are you sure you want to delete this product?', true);
+
+      if (confirmDelete) {
+        products = products.filter(p => p.id !== productId);
+        filterProducts();
+        showMessageBox('Success', 'Product deleted successfully!');
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('productModal').style.display = 'none';
+    }
+
+    function changePage(direction) {
+      const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+      const newPage = currentPage + direction;
+
+      if (newPage >= 1 && newPage <= totalPages) {
+        currentPage = newPage;
+        renderProducts();
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('admin-sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    document.getElementById('productForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const productData = {
+        name: document.getElementById('productName').value.trim(),
+        category: document.getElementById('productCategory').value,
+        description: document.getElementById('productDescription').value.trim(),
+        price: parseFloat(document.getElementById('productPrice').value),
+        condition: document.getElementById('productCondition').value,
+        image: document.getElementById('productImage').value.trim() || 'https://placehold.co/200x200/cccccc/ffffff?text=No+Image',
+        stock: parseInt(document.getElementById('productStock').value),
+        status: document.getElementById('productStatus').value,
+        sellerId: currentUserId
+      };
+
+      if (!productData.name || !productData.category || !productData.description || isNaN(productData.price) || !productData.condition || isNaN(productData.stock) || productData.stock < 0) {
+        showMessageBox('Validation Error', 'Please fill in all required fields correctly.');
+        return;
+      }
+
+      if (editingProductId) {
+        const productIndex = products.findIndex(p => p.id === editingProductId);
+        if (productIndex !== -1) {
+          products[productIndex] = { ...products[productIndex], ...productData };
+          showMessageBox('Success', 'Product updated successfully!');
+        }
+      } else {
+        const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+        const newProduct = { id: newId, ...productData };
+        products.push(newProduct);
+        showMessageBox('Success', 'Product added successfully!');
+      }
+      closeModal();
+      filterProducts();
+    });
+
+    window.addEventListener('click', function (event) {
+      const productModal = document.getElementById('productModal');
+      if (event.target === productModal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('click', function (event) {
+      const sidebar = document.getElementById('admin-sidebar');
+      const mobileBtn = document.querySelector('.mobile-menu-btn');
+
+      if (window.innerWidth <= 768 &&
+        !sidebar.contains(event.target) &&
+        !mobileBtn.contains(event.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+
+    window.addEventListener('resize', function () {
+      const sidebar = document.getElementById('admin-sidebar');
+      if (window.innerWidth > 768) {
+        sidebar.classList.remove('open');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('currentUserId').textContent = currentUserId;
+      const sidebar = document.getElementById('admin-sidebar');
+      if (window.innerWidth <= 768) {
+        sidebar.classList.remove('open');
+      }
+      filterProducts();
+    });
+  </script>
+</body>
+
+</html>

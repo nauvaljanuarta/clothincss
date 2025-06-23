@@ -2,616 +2,657 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - ClothIn</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
-    <style>
-        .admin-layout {
-            display: flex;
-            min-height: 100vh;
-            background-color: var(--color-gray-50);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - ClothIn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .admin-layout {
+      display: flex;
+      min-height: 100vh;
+      background-color: #F9FAFB;
+    }
 
-        .admin-sidebar {
-            width: 250px;
-            background-color: var(--color-blue-600);
-            color: white;
-            padding: 2rem 0;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 30;
-        }
+    .admin-sidebar {
+      width: 250px;
+      background-color: #2563EB;
+      color: white;
+      padding: 2rem 0;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 30;
+    }
 
-        .admin-content {
-            flex: 1;
-            margin-left: 250px;
-        }
+    .admin-content {
+      flex: 1;
+      margin-left: 250px;
+    }
 
-        .admin-header {
-            background-color: white;
-            padding: 1rem 2rem;
-            border-bottom: 1px solid var(--color-gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
+    .admin-header {
+      background-color: white;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #E5E7EB;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
 
-        .admin-main {
-            padding: 2rem;
-        }
+    .admin-main {
+      padding: 2rem;
+    }
 
-        .sidebar-brand {
-            padding: 0 1.5rem 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 2rem;
-        }
+    .sidebar-brand {
+      padding: 0 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 2rem;
+    }
 
-        .sidebar-brand h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-        }
+    .sidebar-brand h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+    }
 
-        .sidebar-nav {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+    .sidebar-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
 
-        .nav-item {
-            margin-bottom: 0.5rem;
-        }
+    .nav-item {
+      margin-bottom: 0.5rem;
+    }
 
-        .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1.5rem;
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-        }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+    }
 
-        .nav-link:hover,
-        .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-left: 3px solid white;
-        }
+    .nav-link:hover,
+    .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-left: 3px solid white;
+    }
 
-        .nav-icon {
-            width: 1.25rem;
-            height: 1.25rem;
-            margin-right: 0.75rem;
-        }
+    .nav-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-right: 0.75rem;
+    }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
 
-        .stat-card {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid var(--color-blue-500);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    .stat-card {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #3B82F6;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        .stat-card.green {
-            border-left-color: var(--color-green-500);
-        }
+    .stat-card.green {
+      border-left-color: #22C55E;
+    }
 
-        .stat-card.yellow {
-            border-left-color: var(--color-yellow-500);
-        }
+    .stat-card.yellow {
+      border-left-color: #FACC15;
+    }
 
-        .stat-card.red {
-            border-left-color: var(--color-red-500);
-        }
+    .stat-card.red {
+      border-left-color: #EF4444;
+    }
 
-        .stat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
 
-        .stat-title {
-            font-size: 0.875rem;
-            color: var(--color-gray-600);
-            font-weight: 500;
-        }
+    .stat-title {
+      font-size: 0.875rem;
+      color: #4B5563;
+      font-weight: 500;
+    }
 
-        .stat-icon {
-            width: 2rem;
-            height: 2rem;
-            color: var(--color-gray-400);
-        }
+    .stat-icon {
+      width: 2rem;
+      height: 2rem;
+      color: #9CA3AF;
+    }
 
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--color-gray-900);
-            margin-bottom: 0.5rem;
-        }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1F2937;
+      margin-bottom: 0.5rem;
+    }
 
-        .stat-change {
-            font-size: 0.875rem;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
+    .stat-change {
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
 
-        .stat-change.positive {
-            color: var(--color-green-600);
-        }
+    .stat-change.positive {
+      color: #16A34A;
+    }
 
-        .stat-change.negative {
-            color: var(--color-red-600);
-        }
+    .stat-change.negative {
+      color: #DC2626;
+    }
 
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-        }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
 
-        .chart-card {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
+    .chart-card {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
 
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
 
-        .chart-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--color-gray-900);
-        }
+    .chart-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #1F2937;
+    }
 
-        .recent-activity {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
+    .recent-activity {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
 
-        .activity-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--color-gray-100);
-        }
+    .activity-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid #F3F4F6;
+    }
 
-        .activity-item:last-child {
-            border-bottom: none;
-        }
+    .activity-item:last-child {
+      border-bottom: none;
+    }
 
-        .activity-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-        }
+    .activity-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+    }
 
-        .activity-icon.blue {
-            background-color: var(--color-blue-100);
-            color: var(--color-blue-600);
-        }
+    .activity-icon.blue {
+      background-color: #DBEAFE;
+      color: #2563EB;
+    }
 
-        .activity-icon.green {
-            background-color: var(--color-green-100);
-            color: var(--color-green-600);
-        }
+    .activity-icon.green {
+      background-color: #D1FAE5;
+      color: #047857;
+    }
 
-        .activity-icon.yellow {
-            background-color: var(--color-yellow-100);
-            color: var(--color-yellow-600);
-        }
+    .activity-icon.yellow {
+      background-color: #FEF3C7;
+      color: #92400E;
+    }
 
-        .activity-content h4 {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
+    .activity-content h4 {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
 
-        .activity-content p {
-            font-size: 0.875rem;
-            color: var(--color-gray-600);
-        }
+    .activity-content p {
+      font-size: 0.875rem;
+      color: #4B5563;
+    }
 
-        .activity-time {
-            margin-left: auto;
-            font-size: 0.75rem;
-            color: var(--color-gray-500);
-        }
+    .activity-time {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: #6B7280;
+    }
 
-        .admin-profile {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
+    .admin-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
 
-        .admin-avatar {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            background-color: var(--color-blue-500);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
+    .admin-avatar {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: #3B82F6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--color-blue-600);
-        }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #2563EB;
+    }
 
-        .page-header {
-            margin-bottom: 2rem;
-        }
+    .page-header {
+      margin-bottom: 2rem;
+    }
 
-        .page-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--color-gray-900);
-            margin-bottom: 0.5rem;
-        }
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1F2937;
+      margin-bottom: 0.5rem;
+    }
 
-        .page-subtitle {
-            color: var(--color-gray-600);
-        }
+    .page-subtitle {
+      color: #4B5563;
+    }
 
-        .btn-primary {
-            background-color: var(--color-blue-600);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.375rem;
-            font-weight: 500;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    .btn-primary {
+      background-color: #2563EB;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-        .btn-primary:hover {
-            background-color: var(--color-blue-700);
-        }
+    .btn-primary:hover {
+      background-color: #1D4ED8;
+    }
 
-        @media (max-width: 768px) {
-            .admin-sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-            }
+    @media (max-width: 768px) {
+      .admin-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
 
-            .admin-sidebar.open {
-                transform: translateX(0);
-            }
+      .admin-sidebar.open {
+        transform: translateX(0);
+      }
 
-            .admin-content {
-                margin-left: 0;
-            }
+      .admin-content {
+        margin-left: 0;
+      }
 
-            .mobile-menu-btn {
-                display: block;
-            }
+      .mobile-menu-btn {
+        display: block;
+      }
 
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
 
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
 
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="admin-layout">
-        <!-- Sidebar -->
-        <aside class="admin-sidebar" id="admin-sidebar">
-            <div class="sidebar-brand">
-                <h2>ClothIn Admin</h2>
-            </div>
-            <nav>
-                <ul class="sidebar-nav">
-                    <li class="nav-item">
-                        <a href="admin-dashboard.html" class="nav-link active">
-                            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                            </svg>
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="admin-users.html" class="nav-link">
-                            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                            Users
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="admin-articles.html" class="nav-link">
-                            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                            </svg>
-                            Articles
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="admin-transactions.html" class="nav-link">
-                            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            Transactions
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="catalog.html" class="nav-link">
-                            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                            </svg>
-                            Products
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="landing.html" class="nav-link">
-                            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>
-                            Back to Site
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="sidebar-brand">
+        <h2>ClothIn Admin</h2>
+      </div>
+      <nav>
+        <ul class="sidebar-nav">
+          <li class="nav-item">
+            <a href="admin-dashboard.html" class="nav-link active">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="admin-users.html" class="nav-link">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              Users
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="admin-articles.html" class="nav-link">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+              </svg>
+              Articles
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="admin-transactions.html" class="nav-link">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Transactions
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="admin-catalog.html" class="nav-link">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              Products
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="landing.html" class="nav-link">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Back to Site
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
 
-        <!-- Main Content -->
-        <div class="admin-content">
-            <!-- Header -->
-            <header class="admin-header">
-                <div class="flex items-center gap-4">
-                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                    <div class="page-header">
-                        <h1 class="page-title">Dashboard</h1>
-                        <p class="page-subtitle">Welcome back, Admin</p>
-                    </div>
-                </div>
-                <div class="admin-profile">
-                    <div class="admin-avatar">A</div>
-                    <div>
-                        <div class="font-semibold">Admin User</div>
-                        <div class="text-sm text-gray-600">Administrator</div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Main Content -->
-            <main class="admin-main">
-                <!-- Stats Grid -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-title">Total Users</div>
-                            <svg class="stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                        </div>
-                        <div class="stat-value">1,247</div>
-                        <div class="stat-change positive">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                            </svg>
-                            +12% from last month
-                        </div>
-                    </div>
-
-                    <div class="stat-card green">
-                        <div class="stat-header">
-                            <div class="stat-title">Total Revenue</div>
-                            <svg class="stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <div class="stat-value">$24,567</div>
-                        <div class="stat-change positive">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                            </svg>
-                            +8% from last month
-                        </div>
-                    </div>
-
-                    <div class="stat-card yellow">
-                        <div class="stat-header">
-                            <div class="stat-title">Total Orders</div>
-                            <svg class="stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                            </svg>
-                        </div>
-                        <div class="stat-value">892</div>
-                        <div class="stat-change positive">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                            </svg>
-                            +15% from last month
-                        </div>
-                    </div>
-
-                    <div class="stat-card red">
-                        <div class="stat-header">
-                            <div class="stat-title">Articles Published</div>
-                            <svg class="stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                            </svg>
-                        </div>
-                        <div class="stat-value">156</div>
-                        <div class="stat-change positive">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                            </svg>
-                            +5% from last month
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dashboard Grid -->
-                <div class="dashboard-grid">
-                    <!-- Chart Card -->
-                    <div class="chart-card">
-                        <div class="chart-header">
-                            <h3 class="chart-title">Revenue Overview</h3>
-                            <select class="filter-select" style="width: auto; padding: 0.5rem 1rem; border: 1px solid var(--color-gray-300); border-radius: 0.375rem;">
-                                <option>Last 7 days</option>
-                                <option>Last 30 days</option>
-                                <option>Last 3 months</option>
-                            </select>
-                        </div>
-                        <div style="height: 300px; display: flex; align-items: center; justify-content: center; background-color: var(--color-gray-100); border-radius: 0.375rem;">
-                        </div>
-                    </div>
-
-                    <!-- Recent Activity -->
-                    <div class="recent-activity">
-                        <h3 class="chart-title" style="margin-bottom: 1.5rem;">Recent Activity</h3>
-                        
-                        <div class="activity-item">
-                            <div class="activity-icon blue">
-                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                            </div>
-                            <div class="activity-content">
-                                <h4>New user registered</h4>
-                                <p>Sarah Johnson joined the platform</p>
-                            </div>
-                            <div class="activity-time">2 min ago</div>
-                        </div>
-
-                        <div class="activity-item">
-                            <div class="activity-icon green">
-                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                                </svg>
-                            </div>
-                            <div class="activity-content">
-                                <h4>New order placed</h4>
-                                <p>Order #CLT-1735123456 - $89.99</p>
-                            </div>
-                            <div class="activity-time">5 min ago</div>
-                        </div>
-
-                        <div class="activity-item">
-                            <div class="activity-icon yellow">
-                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                                </svg>
-                            </div>
-                            <div class="activity-content">
-                                <h4>Article published</h4>
-                                <p>"Sustainable Fashion Trends 2025"</p>
-                            </div>
-                            <div class="activity-time">1 hour ago</div>
-                        </div>
-
-                        <div class="activity-item">
-                            <div class="activity-icon blue">
-                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <div class="activity-content">
-                                <h4>Payment received</h4>
-                                <p>$217.05 from order #CLT-1735123455</p>
-                            </div>
-                            <div class="activity-time">2 hours ago</div>
-                        </div>
-
-                        <div class="activity-item">
-                            <div class="activity-icon green">
-                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <div class="activity-content">
-                                <h4>Order completed</h4>
-                                <p>Order #CLT-1735123454 delivered</p>
-                            </div>
-                            <div class="activity-time">3 hours ago</div>
-                        </div>
-                    </div>
-                </div>
-            </main>
+    <div class="admin-content">
+      <header class="admin-header">
+        <div class="flex items-center gap-4">
+          <button class="mobile-menu-btn" onclick="toggleSidebar()">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <div class="page-header">
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-subtitle">Welcome back, Admin</p>
+          </div>
         </div>
+        <div class="admin-profile">
+          <div class="admin-avatar">A</div>
+          <div>
+            <div class="font-semibold">Admin User</div>
+            <div class="text-sm text-gray-600">Administrator</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="admin-main">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-title">Total Users</div>
+              <svg class="stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </div>
+            <div class="stat-value">1,247</div>
+            <div class="stat-change positive">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+              </svg>
+              +12% from last month
+            </div>
+          </div>
+
+          <div class="stat-card green">
+            <div class="stat-header">
+              <div class="stat-title">Total Revenue</div>
+              <svg class="stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div class="stat-value">$24,567</div>
+            <div class="stat-change positive">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+              </svg>
+              +8% from last month
+            </div>
+          </div>
+
+          <div class="stat-card yellow">
+            <div class="stat-header">
+              <div class="stat-title">Total Orders</div>
+              <svg class="stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+            </div>
+            <div class="stat-value">892</div>
+            <div class="stat-change positive">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+              </svg>
+              +15% from last month
+            </div>
+          </div>
+
+          <div class="stat-card red">
+            <div class="stat-header">
+              <div class="stat-title">Articles Published</div>
+              <svg class="stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+              </svg>
+            </div>
+            <div class="stat-value">156</div>
+            <div class="stat-change positive">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+              </svg>
+              +5% from last month
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3 class="chart-title">Revenue Overview</h3>
+              <select class="filter-select"
+                style="width: auto; padding: 0.5rem 1rem; border: 1px solid #D1D5DB; border-radius: 0.375rem;">
+                <option>Last 7 days</option>
+                <option>Last 30 days</option>
+                <option>Last 3 months</option>
+              </select>
+            </div>
+            <div style="height: 300px;">
+              <canvas id="revenueChart"></canvas>
+            </div>
+          </div>
+
+          <div class="recent-activity">
+            <h3 class="chart-title" style="margin-bottom: 1.5rem;">Recent Activity</h3>
+
+            <div class="activity-item">
+              <div class="activity-icon blue">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <div class="activity-content">
+                <h4>New user registered</h4>
+                <p>Sarah Johnson joined the platform</p>
+              </div>
+              <div class="activity-time">2 min ago</div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon green">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+              </div>
+              <div class="activity-content">
+                <h4>New order placed</h4>
+                <p>Order #CLT-1735123456 - $89.99</p>
+              </div>
+              <div class="activity-time">5 min ago</div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon yellow">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                </svg>
+              </div>
+              <div class="activity-content">
+                <h4>Article published</h4>
+                <p>"Sustainable Fashion Trends 2025"</p>
+              </div>
+              <div class="activity-time">1 hour ago</div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon blue">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="activity-content">
+                <h4>Payment received</h4>
+                <p>$217.05 from order #CLT-1735123455</p>
+              </div>
+              <div class="activity-time">2 hours ago</div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon green">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="activity-content">
+                <h4>Order completed</h4>
+                <p>Order #CLT-1735123454 delivered</p>
+              </div>
+              <div class="activity-time">3 hours ago</div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
+  </div>
 
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('admin-sidebar');
-            sidebar.classList.toggle('open');
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('admin-sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    window.addEventListener('resize', function () {
+      const sidebar = document.getElementById('admin-sidebar');
+      if (window.innerWidth > 768) {
+        sidebar.classList.remove('open');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const sidebar = document.getElementById('admin-sidebar');
+      if (window.innerWidth <= 768) {
+        sidebar.classList.remove('open');
+      }
+
+      const ctx = document.getElementById('revenueChart').getContext('2d');
+      const revenueChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [{
+            label: 'Revenue ($)',
+            data: [12000, 15000, 10000, 18000, 22000, 24567],
+            borderColor: '#3B82F6',
+            backgroundColor: 'rgba(59, 130, 246, 0.2)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false
+              }
+            },
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: '#E5E7EB'
+              }
+            }
+          }
         }
-
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', function(event) {
-            const sidebar = document.getElementById('admin-sidebar');
-            const mobileBtn = document.querySelector('.mobile-menu-btn');
-            
-            if (window.innerWidth <= 768 && 
-                !sidebar.contains(event.target) && 
-                !mobileBtn.contains(event.target)) {
-                sidebar.classList.remove('open');
-            }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            const sidebar = document.getElementById('admin-sidebar');
-            if (window.innerWidth > 768) {
-                sidebar.classList.remove('open');
-            }
-        });
-    </script>
+      });
+    });
+  </script>
 </body>
 
 </html>
