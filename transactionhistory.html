@@ -10,6 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <style>
+        .sticky.scrolled {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
         .history-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -281,7 +285,7 @@
             </nav>
 
             <div class="text-center">
-                <a href="index.html" class="nav-link"><span
+                <a href="landing.html" class="nav-link"><span
                         class="text-2xl sm:text-4xl font-bold me-70">ClothIn.</span></a>
             </div>
 
@@ -396,10 +400,12 @@
             <!-- Empty State -->
             <div id="empty-state" class="empty-state" style="display: none;">
                 <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 <h2 class="text-2xl font-bold mb-4">No orders found</h2>
-                <p class="text-gray-600 mb-8">You haven't made any purchases yet. Start shopping to see your order history here.</p>
+                <p class="text-gray-600 mb-8">You haven't made any purchases yet. Start shopping to see your order
+                    history here.</p>
                 <a href="catalog.html" class="btn-primary inline-block">Start Shopping</a>
             </div>
         </div>
@@ -411,7 +417,8 @@
                 <div>
                     <h3 class="text-white text-lg font-semibold mb-4">About Us</h3>
                     <p class="mb-4">
-                        We're on a mission to make fashion more sustainable and affordable through our pre-loved clothing marketplace.
+                        We're on a mission to make fashion more sustainable and affordable through our pre-loved
+                        clothing marketplace.
                     </p>
                 </div>
                 <div>
@@ -444,19 +451,36 @@
     </footer>
 
     <script>
+        const header = document.getElementById('navbar');
+        window.addEventListener('scroll', function() {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
         let allOrders = [];
         let filteredOrders = [];
 
         // Sample orders data (in real app, this would come from API)
-        const sampleOrders = [
-            {
+        const sampleOrders = [{
                 orderId: 'CLT-1735123456789',
                 date: '2024-12-25',
                 status: 'completed',
-                items: [
-                    { name: "Vintage Levi's Denim Jacket", price: 45.99, quantity: 1, image: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?q=80&w=1938&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-                    { name: "Cashmere Turtleneck Sweater", price: 65.00, quantity: 1, image: 'http://images.unsplash.com/photo-1631541909061-71e349d1f203?q=80&w=2010&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-                    { name: "Vintage Leather Crossbody Bag", price: 79.99, quantity: 1, image: 'https://plus.unsplash.com/premium_photo-1705554519595-c1143c7fef97?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
+                items: [{
+                        name: "Vintage Levi's Denim Jacket",
+                        price: 45.99,
+                        quantity: 1,
+                        image: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?q=80&w=1938&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                    },
+                    {
+                        name: "Cashmere Turtleneck Sweater",
+                        price: 65.00,
+                        quantity: 1,
+                        image: 'http://images.unsplash.com/photo-1631541909061-71e349d1f203?q=80&w=2010&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                    },
+                    {
+                        name: "Vintage Leather Crossbody Bag",
+                        price: 79.99,
+                        quantity: 1,
+                        image: 'https://plus.unsplash.com/premium_photo-1705554519595-c1143c7fef97?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                    }
                 ],
                 total: 217.05,
                 paymentMethod: 'credit-card'
@@ -465,9 +489,12 @@
                 orderId: 'CLT-1734987654321',
                 date: '2024-12-20',
                 status: 'shipped',
-                items: [
-                    { name: "Silk Button-Up Blouse", price: 38.50, quantity: 2, image: 'images/product4.jpg' }
-                ],
+                items: [{
+                    name: "Silk Button-Up Blouse",
+                    price: 38.50,
+                    quantity: 2,
+                    image: 'images/product4.jpg'
+                }],
                 total: 86.99,
                 paymentMethod: 'e-wallet'
             },
@@ -475,9 +502,12 @@
                 orderId: 'CLT-1734876543210',
                 date: '2024-12-15',
                 status: 'processing',
-                items: [
-                    { name: "Wool Winter Coat", price: 95.00, quantity: 1, image: 'images/product5.jpg' }
-                ],
+                items: [{
+                    name: "Wool Winter Coat",
+                    price: 95.00,
+                    quantity: 1,
+                    image: 'images/product5.jpg'
+                }],
                 total: 104.99,
                 paymentMethod: 'bank-transfer'
             }
@@ -488,7 +518,7 @@
             const storedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
             allOrders = [...storedOrders, ...sampleOrders];
             filteredOrders = [...allOrders];
-            
+
             updateStatistics();
             renderOrders();
         }
@@ -496,7 +526,7 @@
         function updateStatistics() {
             const totalOrders = allOrders.length;
             const totalSpent = allOrders.reduce((sum, order) => sum + order.total, 0);
-            const itemsPurchased = allOrders.reduce((sum, order) => 
+            const itemsPurchased = allOrders.reduce((sum, order) =>
                 sum + order.items.reduce((itemSum, item) => itemSum + item.quantity, 0), 0);
             const avgOrder = totalOrders > 0 ? totalSpent / totalOrders : 0;
 
@@ -517,7 +547,7 @@
             }
 
             emptyState.style.display = 'none';
-            
+
             container.innerHTML = filteredOrders.map(order => `
                 <div class="order-card">
                     <div class="order-header">
@@ -534,15 +564,15 @@
                     
                     <div class="order-items">
                         ${order.items.map(item => `
-                            <div class="order-item">
-                                <img src="${item.image}" alt="${item.name}" class="item-image">
-                                <div class="item-details">
-                                    <h4>${item.name}</h4>
-                                    <p>Quantity: ${item.quantity}</p>
-                                </div>
-                                <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
-                            </div>
-                        `).join('')}
+                                    <div class="order-item">
+                                        <img src="${item.image}" alt="${item.name}" class="item-image">
+                                        <div class="item-details">
+                                            <h4>${item.name}</h4>
+                                            <p>Quantity: ${item.quantity}</p>
+                                        </div>
+                                        <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                                    </div>
+                                `).join('')}
                     </div>
                     
                     <div class="order-footer">
@@ -565,27 +595,27 @@
         function filterOrders() {
             const statusFilter = document.getElementById('status-filter').value;
             const dateFilter = document.getElementById('date-filter').value;
-            
+
             filteredOrders = allOrders.filter(order => {
                 // Status filter
                 if (statusFilter && order.status !== statusFilter) {
                     return false;
                 }
-                
+
                 // Date filter
                 if (dateFilter) {
                     const orderDate = new Date(order.date);
                     const cutoffDate = new Date();
                     cutoffDate.setDate(cutoffDate.getDate() - parseInt(dateFilter));
-                    
+
                     if (orderDate < cutoffDate) {
                         return false;
                     }
                 }
-                
+
                 return true;
             });
-            
+
             renderOrders();
         }
 
@@ -605,7 +635,9 @@
         function viewOrderDetails(orderId) {
             const order = allOrders.find(o => o.orderId === orderId);
             if (order) {
-                alert(`Order Details:\n\nOrder ID: ${order.orderId}\nDate: ${formatDate(order.date)}\nStatus: ${capitalizeFirst(order.status)}\nTotal: $${order.total.toFixed(2)}\nPayment: ${order.paymentMethod}`);
+                alert(
+                    `Order Details:\n\nOrder ID: ${order.orderId}\nDate: ${formatDate(order.date)}\nStatus: ${capitalizeFirst(order.status)}\nTotal: $${order.total.toFixed(2)}\nPayment: ${order.paymentMethod}`
+                    );
             }
         }
 

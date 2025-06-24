@@ -10,6 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <style>
+        .sticky.scrolled {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
         .checkout-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -300,7 +304,7 @@
             </nav>
 
             <div class="text-center">
-                <a href="index.html" class="nav-link"><span
+                <a href="landing.html" class="nav-link"><span
                         class="text-2xl sm:text-4xl font-bold me-70">ClothIn.</span></a>
             </div>
 
@@ -388,11 +392,13 @@
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label for="firstName" class="form-label">First Name</label>
-                                    <input type="text" id="firstName" name="firstName" class="form-input" required>
+                                    <input type="text" id="firstName" name="firstName" class="form-input"
+                                        required>
                                 </div>
                                 <div class="form-group">
                                     <label for="lastName" class="form-label">Last Name</label>
-                                    <input type="text" id="lastName" name="lastName" class="form-input" required>
+                                    <input type="text" id="lastName" name="lastName" class="form-input"
+                                        required>
                                 </div>
                                 <div class="form-group full-width">
                                     <label for="email" class="form-label">Email Address</label>
@@ -445,7 +451,8 @@
                             <label class="payment-method selected" for="credit-card">
                                 <input type="radio" id="credit-card" name="payment" value="credit-card" checked>
                                 <svg class="payment-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                                 </svg>
                                 <div>
                                     <div class="font-medium">Credit/Debit Card</div>
@@ -456,7 +463,8 @@
                             <label class="payment-method" for="bank-transfer">
                                 <input type="radio" id="bank-transfer" name="payment" value="bank-transfer">
                                 <svg class="payment-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                 </svg>
                                 <div>
                                     <div class="font-medium">Bank Transfer</div>
@@ -467,7 +475,8 @@
                             <label class="payment-method" for="e-wallet">
                                 <input type="radio" id="e-wallet" name="payment" value="e-wallet">
                                 <svg class="payment-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                 </svg>
                                 <div>
                                     <div class="font-medium">E-Wallet</div>
@@ -481,15 +490,18 @@
                             <div class="form-grid">
                                 <div class="form-group full-width">
                                     <label for="cardNumber" class="form-label">Card Number</label>
-                                    <input type="text" id="cardNumber" name="cardNumber" class="form-input" placeholder="1234 5678 9012 3456">
+                                    <input type="text" id="cardNumber" name="cardNumber" class="form-input"
+                                        placeholder="1234 5678 9012 3456">
                                 </div>
                                 <div class="form-group">
                                     <label for="expiryDate" class="form-label">Expiry Date</label>
-                                    <input type="text" id="expiryDate" name="expiryDate" class="form-input" placeholder="MM/YY">
+                                    <input type="text" id="expiryDate" name="expiryDate" class="form-input"
+                                        placeholder="MM/YY">
                                 </div>
                                 <div class="form-group">
                                     <label for="cvv" class="form-label">CVV</label>
-                                    <input type="text" id="cvv" name="cvv" class="form-input" placeholder="123">
+                                    <input type="text" id="cvv" name="cvv" class="form-input"
+                                        placeholder="123">
                                 </div>
                                 <div class="form-group full-width">
                                     <label for="cardName" class="form-label">Name on Card</label>
@@ -527,8 +539,10 @@
                         </div>
 
                         <div class="security-info">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
                             Your payment information is secure and encrypted
                         </div>
@@ -538,9 +552,10 @@
                 <!-- Order Summary -->
                 <div class="order-summary">
                     <h2 class="section-title">Order Summary</h2>
-                    
+
                     <div class="order-item">
-                        <img src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?q=80&w=1938&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Vintage Denim Jacket" class="item-image">
+                        <img src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?q=80&w=1938&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Vintage Denim Jacket" class="item-image">
                         <div class="item-details">
                             <h4>Vintage Levi's Denim Jacket</h4>
                             <p>Size: M • Qty: 1</p>
@@ -549,7 +564,8 @@
                     </div>
 
                     <div class="order-item">
-                        <img src="http://images.unsplash.com/photo-1631541909061-71e349d1f203?q=80&w=2010&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cashmere Sweater" class="item-image">
+                        <img src="http://images.unsplash.com/photo-1631541909061-71e349d1f203?q=80&w=2010&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Cashmere Sweater" class="item-image">
                         <div class="item-details">
                             <h4>Cashmere Turtleneck Sweater</h4>
                             <p>Size: S • Qty: 1</p>
@@ -558,7 +574,8 @@
                     </div>
 
                     <div class="order-item">
-                        <img src="https://plus.unsplash.com/premium_photo-1705554519595-c1143c7fef97?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Leather Crossbody Bag" class="item-image">
+                        <img src="https://plus.unsplash.com/premium_photo-1705554519595-c1143c7fef97?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Leather Crossbody Bag" class="item-image">
                         <div class="item-details">
                             <h4>Vintage Leather Crossbody Bag</h4>
                             <p>One Size • Qty: 1</p>
@@ -599,7 +616,8 @@
                 <div>
                     <h3 class="text-white text-lg font-semibold mb-4">About Us</h3>
                     <p class="mb-4">
-                        We're on a mission to make fashion more sustainable and affordable through our pre-loved clothing marketplace.
+                        We're on a mission to make fashion more sustainable and affordable through our pre-loved
+                        clothing marketplace.
                     </p>
                 </div>
                 <div>
@@ -632,10 +650,12 @@
     </footer>
 
     <script>
-        // Payment method switching
+        const header = document.getElementById('navbar');
+        window.addEventListener('scroll', function() {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
         document.querySelectorAll('input[name="payment"]').forEach(radio => {
             radio.addEventListener('change', function() {
-                // Update visual selection
                 document.querySelectorAll('.payment-method').forEach(method => {
                     method.classList.remove('selected');
                 });
@@ -657,11 +677,11 @@
         function placeOrder() {
             const form = document.getElementById('checkout-form');
             const formData = new FormData(form);
-            
+
             // Basic validation
             const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'zipCode'];
             let isValid = true;
-            
+
             requiredFields.forEach(field => {
                 const input = document.getElementById(field);
                 if (!input.value.trim()) {
@@ -674,7 +694,7 @@
 
             // Validate payment method specific fields
             const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
-            
+
             if (selectedPayment === 'credit-card') {
                 const cardFields = ['cardNumber', 'expiryDate', 'cvv', 'cardName'];
                 cardFields.forEach(field => {
@@ -696,28 +716,36 @@
             // Simulate order processing
             const orderData = {
                 orderId: 'CLT-' + Date.now(),
-                items: [
-                    { name: "Vintage Levi's Denim Jacket", price: 45.99, quantity: 1 },
-                    { name: "Cashmere Turtleneck Sweater", price: 65.00, quantity: 1 },
-                    { name: "Vintage Leather Crossbody Bag", price: 79.99, quantity: 1 }
+                items: [{
+                        name: "Vintage Levi's Denim Jacket",
+                        price: 45.99,
+                        quantity: 1
+                    },
+                    {
+                        name: "Cashmere Turtleneck Sweater",
+                        price: 65.00,
+                        quantity: 1
+                    },
+                    {
+                        name: "Vintage Leather Crossbody Bag",
+                        price: 79.99,
+                        quantity: 1
+                    }
                 ],
                 total: 217.05,
                 paymentMethod: selectedPayment,
                 timestamp: new Date().toISOString()
             };
 
-            // Store order in localStorage for transaction history
             let orders = JSON.parse(localStorage.getItem('orders') || '[]');
             orders.push(orderData);
             localStorage.setItem('orders', JSON.stringify(orders));
 
             alert('Order placed successfully! Order ID: ' + orderData.orderId);
-            
-            // Redirect to transaction history
+
             window.location.href = 'transactionhistory.html';
         }
 
-        // Mobile menu functionality
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
