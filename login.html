@@ -8,26 +8,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style>
     html {
       overflow-x: hidden;
     }
 
     body {
-      font-family: 'MontSerrat', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       overflow: clip;
-    }
-
-    .hidden-section {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    }
-
-    .visible-section {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .back-to-top {
@@ -51,12 +40,6 @@
 
     .sticky.scrolled {
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    }
-
-    .hidden-section {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
 
     .form-container {
@@ -164,65 +147,42 @@
     .social-btn:hover {
       background-color: var(--color-gray-100);
     }
+
+    #messageBoxOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 50;
+    }
+
+    #messageBox {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 50;
+      max-width: 300px;
+      width: 100%;
+    }
   </style>
 </head>
 
 <body>
   <header id="navbar" class="sticky top-0 z-40 bg-white shadow-black">
-    <div class="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <nav class="hidden lg:flex items-center gap-6">
-        <a href="index.html#testimonials"
-          class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Testimonials</a>
-        <a href="index.html#features"
-          class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Features</a>
-        <a href="archive.html"
-          class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Blog</a>
-        <a href="catalog.html"
-          class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Shop</a>
-      </nav>
-
+    <div class="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-center">
       <div class="text-center">
-        <a href="landing.html" class="nav-link"><span class="text-2xl sm:text-4xl font-bold me-70">ClothIn.</span></a>
-      </div>
-
-      <div class="flex items-center justify-end gap-4">
-        <a href="login.html" class="hidden lg:inline-block text-sm font-medium text-blue-500 hover:text-blue-600">
-          Log in
+        <a href="landing.html" class="nav-link">
+          <span class="text-2xl sm:text-4xl font-bold">ClothIn.</span>
         </a>
-        <a href="register.html"
-          class="hidden lg:inline-block text-sm font-medium bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md">
-          Sign up
-        </a>
-
-        <button id="mobile-menu-button"
-          class="lg:hidden p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:ring-2">
-          <span class="sr-only">Open main menu</span>
-          <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <svg id="close-icon" class="hidden h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <div class="ml-auto">
-      <div id="mobile-menu" class="hidden lg:hidden px-4 bg-white shadow-lg">
-        <a href="index.html#testimonials"
-          class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Testimonials</a>
-        <a href="index.html#features"
-          class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Features</a>
-        <a href="archive.html"
-          class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Blog</a>
-        <a href="catalog.html"
-          class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Shop</a>
-        <div class="px-3 py-2">
-          <a href="login.html" class="block text-center py-2 text-blue-500 hover:text-blue-600">Log in</a>
-          <a href="register.html"
-            class="block w-full bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md text-center">Sign
-            up</a>
-        </div>
       </div>
     </div>
   </header>
@@ -269,7 +229,7 @@
             <span class="auth-divider-text">or login with email</span>
           </div>
 
-          <form action="catalog.html" method="GET">
+          <form id="loginForm">
             <div class="form-group">
               <label for="email" class="form-label">Email Address</label>
               <input type="email" id="email" name="email" class="form-input" required>
@@ -313,6 +273,14 @@
         </div>
       </div>
     </section>
+
+    <!-- Message Box -->
+    <div id="messageBoxOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50"></div>
+    <div id="messageBox" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg hidden z-50 max-w-sm w-full">
+      <h3 id="messageBoxTitle" class="text-lg font-semibold mb-2"></h3>
+      <p id="messageBoxContent" class="mb-4"></p>
+      <button onclick="closeMessageBox()" class="btn-primary">Close</button>
+    </div>
   </main>
 
   <footer class="bg-gray-900 text-gray-300 z-40 relative">
@@ -364,27 +332,27 @@
           <h3 class="text-white text-lg font-semibold mb-4">Quick Links</h3>
           <ul class="space-y-2">
             <li>
-              <a href="index.html" class="hover:text-white transition-colors">
+              <a href="landing.html" class="hover:text-white transition-colors">
                 Home
               </a>
             </li>
             <li>
-              <a href="index.html#features" class="hover:text-white transition-colors nav-link">
+              <a href="landing.html#features" class="hover:text-white transition-colors">
                 Features
               </a>
             </li>
             <li>
-              <a href="index.html#testimonials" class="hover:text-white transition-colors nav-link">
+              <a href="landing.html#testimonials" class="hover:text-white transition-colors">
                 Testimonials
               </a>
             </li>
             <li>
-              <a href="archive.html" class="hover:text-white transition-colors nav-link">
+              <a href="archive.html" class="hover:text-white transition-colors">
                 Blog
               </a>
             </li>
             <li>
-              <a href="catalog.html" class="hover:text-white transition-colors nav-link">
+              <a href="catalog.html" class="hover:text-white transition-colors">
                 Shop
               </a>
             </li>
@@ -442,7 +410,7 @@
       </div>
 
       <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm">
-        <p>&copy; 2025 Clothin. All rights reserved.</p>
+        <p>© 2025 Clothin. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -456,18 +424,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      //menu mobile
-      const mobileMenuButton = document.getElementById('mobile-menu-button');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const menuIcon = document.getElementById('menu-icon');
-      const closeIcon = document.getElementById('close-icon');
-
-      mobileMenuButton.addEventListener('click', function () {
-        mobileMenu.classList.toggle('hidden');
-        menuIcon.classList.toggle('hidden');
-        closeIcon.classList.toggle('hidden');
-      });
-
+      // Message box functions
       function showMessageBox(title, message) {
         document.getElementById('messageBoxTitle').textContent = title;
         document.getElementById('messageBoxContent').textContent = message;
@@ -475,14 +432,15 @@
         document.getElementById('messageBox').style.display = 'block';
       }
 
-      function closeMessageBox() {
+      window.closeMessageBox = function() {
         document.getElementById('messageBoxOverlay').style.display = 'none';
         document.getElementById('messageBox').style.display = 'none';
       }
 
-      // Login handling
-      function handleLogin(event) {
-        event.preventDefault();
+      // Login handler
+      const loginForm = document.getElementById('loginForm');
+      loginForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
 
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
@@ -494,47 +452,14 @@
         } else {
           showMessageBox('Login Failed', 'Invalid email or password. Please try again.');
         }
-      }
-
-      // scroll smooth tap navbar
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function (e) {
-          if (this.getAttribute('href').includes('#')) {
-            e.preventDefault();
-
-            if (!mobileMenu.classList.contains('hidden')) {
-              mobileMenu.classList.add('hidden');
-              menuIcon.classList.remove('hidden');
-              closeIcon.classList.add('hidden');
-            }
-
-            const targetId = this.getAttribute('href').split('#')[1];
-            const targetElement = document.getElementById(targetId);
-
-            if (targetElement) {
-              window.scrollTo({
-                top: targetElement.offsetTop - 80,
-                behavior: 'smooth'
-              });
-            }
-          }
-        });
       });
 
       const header = document.getElementById('navbar');
-      const headerObserver = new IntersectionObserver((entries) => {
-        header.classList.toggle('scrolled', window.scrollY > 50);
-      });
-
-      headerObserver.observe(header);
-
       window.addEventListener('scroll', function () {
         header.classList.toggle('scrolled', window.scrollY > 50);
       });
 
-      // tombol keatas
       const backToTopButton = document.getElementById('back-to-top');
-
       window.addEventListener('scroll', function () {
         if (window.scrollY > 300) {
           backToTopButton.classList.add('active');

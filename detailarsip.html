@@ -186,64 +186,32 @@
         .table-of-contents a:hover {
             color: var(--color-blue-500);
         }
+
+        /* Improved layout for better text width */
+        .article-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .article-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <!-- Fixed Navbar - Centered Logo Only -->
     <header id="navbar" class="sticky top-0 z-40 bg-white shadow-black">
-        <div class="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            <nav class="hidden lg:flex items-center gap-6">
-                <a href="index.html#testimonials"
-                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Testimonials</a>
-                <a href="index.html#features"
-                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Features</a>
-                <a href="archive.html"
-                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Blog</a>
-                <a href="index.html#contact"
-                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Contact</a>
-            </nav>
-
+        <div class="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-center">
             <div class="text-center">
-                <a href="landing.html" class="nav-link"><span
-                        class="text-2xl sm:text-4xl font-bold me-70">ClothIn.</span></a>
-            </div>
-
-            <div class="flex items-center justify-end gap-4">
-                <button
-                    class="hidden lg:inline-block text-sm font-medium bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md">
-                    Get Started
-                </button>
-
-                <button id="mobile-menu-button"
-                    class="lg:hidden p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:ring-2">
-                    <span class="sr-only">Open main menu</span>
-                    <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                    <svg id="close-icon" class="hidden h-6 w-6" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <div class="ml-auto">
-            <div id="mobile-menu" class="hidden lg:hidden px-4 bg-white shadow-lg">
-                <a href="index.html#testimonials"
-                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Testimonials</a>
-                <a href="index.html#features"
-                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Features</a>
-                <a href="archive.html"
-                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Blog</a>
-                <a href="index.html#contact"
-                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Contact</a>
-                <div class="px-3 py-2">
-                    <button class="w-full bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md">Get
-                        Started</button>
-                </div>
+                <a href="landing.html" class="nav-link">
+                    <span class="text-2xl sm:text-4xl font-bold">ClothIn.</span>
+                </a>
             </div>
         </div>
     </header>
@@ -295,7 +263,7 @@
         <!-- Featured Image -->
         <section class="py-8">
             <div class="container mx-auto px-4 sm:px-6">
-                <div class="max-w-4xl mx-auto">
+                <div class="max-w-6xl mx-auto">
                     <div class="aspect-video rounded-xl overflow-hidden">
                         <img src="images/blog1.jpg" alt="Sustainable Fashion" class="w-full h-full object-cover">
                     </div>
@@ -303,59 +271,57 @@
             </div>
         </section>
 
-        <!-- Article Content -->
+        <!-- Article Content with Improved Layout -->
         <section class="py-12">
             <div class="container mx-auto px-4 sm:px-6">
-                <div class="max-w-4xl mx-auto">
-                    <div class="flex flex-col md:flex-row gap-8">
+                <div class="max-w-6xl mx-auto">
+                    <div class="article-layout">
                         <!-- Sidebar -->
-                        <div class="w-full md:w-1/4">
-                            <div class="sticky top-24">
-                                <!-- Share Buttons -->
-                                <div class="mb-8">
-                                    <h3 class="text-lg font-semibold mb-4">Share</h3>
-                                    <div class="flex space-x-2">
-                                        <a href="#" class="share-button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
-                                            </svg>
-                                        </a>
-                                        <a href="#" class="share-button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
-                                            </svg>
-                                        </a>
-                                        <a href="#" class="share-button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                            </svg>
-                                        </a>
-                                        <a href="#" class="share-button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                            </svg>
-                                        </a>
-                                    </div>
+                        <div class="lg:sticky lg:top-24">
+                            <!-- Share Buttons -->
+                            <div class="mb-8">
+                                <h3 class="text-lg font-semibold mb-4">Share</h3>
+                                <div class="flex space-x-2">
+                                    <a href="#" class="share-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="share-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="share-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="share-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                    </a>
                                 </div>
+                            </div>
 
-                                <!-- Table of Contents -->
-                                <div class="table-of-contents">
-                                    <h3 class="text-lg font-semibold mb-4">Table of Contents</h3>
-                                    <ul>
-                                        <li><a href="#introduction">Introduction</a></li>
-                                        <li><a href="#rise-of-secondhand">The Rise of Secondhand Fashion</a></li>
-                                        <li><a href="#environmental-impact">Environmental Impact</a></li>
-                                        <li><a href="#economic-benefits">Economic Benefits</a></li>
-                                        <li><a href="#technology-role">The Role of Technology</a></li>
-                                        <li><a href="#future-trends">Future Trends</a></li>
-                                        <li><a href="#conclusion">Conclusion</a></li>
-                                    </ul>
-                                </div>
+                            <!-- Table of Contents -->
+                            <div class="table-of-contents">
+                                <h3 class="text-lg font-semibold mb-4">Table of Contents</h3>
+                                <ul>
+                                    <li><a href="#introduction">Introduction</a></li>
+                                    <li><a href="#rise-of-secondhand">The Rise of Secondhand Fashion</a></li>
+                                    <li><a href="#environmental-impact">Environmental Impact</a></li>
+                                    <li><a href="#economic-benefits">Economic Benefits</a></li>
+                                    <li><a href="#technology-role">The Role of Technology</a></li>
+                                    <li><a href="#future-trends">Future Trends</a></li>
+                                    <li><a href="#conclusion">Conclusion</a></li>
+                                </ul>
                             </div>
                         </div>
 
-                        <!-- Main Content -->
-                        <div class="w-full md:w-3/4">
+                        <!-- Main Content - Now takes full available width -->
+                        <div class="min-w-0">
                             <div class="article-content">
                                 <h2 id="introduction">Introduction</h2>
                                 <p>
@@ -476,7 +442,7 @@
         <!-- Related Articles -->
         <section class="py-12 bg-blue-500/3 hidden-section">
             <div class="container mx-auto px-4 sm:px-6">
-                <div class="max-w-4xl mx-auto">
+                <div class="max-w-6xl mx-auto">
                     <h2 class="text-2xl font-bold mb-8">Related Articles</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <!-- Related Article 1 -->
@@ -836,29 +802,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            //menu mobile
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuIcon = document.getElementById('menu-icon');
-            const closeIcon = document.getElementById('close-icon');
-
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-                menuIcon.classList.toggle('hidden');
-                closeIcon.classList.toggle('hidden');
-            });
-
             // scroll smooth tap navbar
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     if (this.getAttribute('href').includes('#')) {
                         e.preventDefault();
-
-                        if (!mobileMenu.classList.contains('hidden')) {
-                            mobileMenu.classList.add('hidden');
-                            menuIcon.classList.remove('hidden');
-                            closeIcon.classList.add('hidden');
-                        }
 
                         const targetId = this.getAttribute('href').split('#')[1];
                         const targetElement = document.getElementById(targetId);

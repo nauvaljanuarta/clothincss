@@ -100,60 +100,13 @@
 </head>
 
 <body>
+    <!-- Fixed Navbar - Centered Logo Only -->
     <header id="navbar" class="sticky top-0 z-40 bg-white shadow-black">
-        <div class="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            <nav class="hidden lg:flex items-center gap-6">
-                <a href="index.html#testimonials"
-                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Testimonials</a>
-                <a href="index.html#features"
-                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Features</a>
-                <a href="archive.html"
-                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Blog</a>
-                <a href="index.html#contact"
-                    class="nav-link font-bold px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">Contact</a>
-            </nav>
-
+        <div class="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-center">
             <div class="text-center">
-                <a href="landing.html" class="nav-link"><span
-                        class="text-2xl sm:text-4xl font-bold me-70">ClothIn.</span></a>
-            </div>
-
-            <div class="flex items-center justify-end gap-4">
-                <button
-                    class="hidden lg:inline-block text-sm font-medium bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md">
-                    Get Started
-                </button>
-
-                <button id="mobile-menu-button"
-                    class="lg:hidden p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:ring-2">
-                    <span class="sr-only">Open main menu</span>
-                    <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                    <svg id="close-icon" class="hidden h-6 w-6" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <div class="ml-auto">
-            <div id="mobile-menu" class="hidden lg:hidden px-4 bg-white shadow-lg">
-                <a href="index.html#testimonials"
-                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Testimonials</a>
-                <a href="index.html#features"
-                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Features</a>
-                <a href="archive.html"
-                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Blog</a>
-                <a href="index.html#contact"
-                    class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 nav-link">Contact</a>
-                <div class="px-3 py-2">
-                    <button class="w-full bg-blue-600 text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md">Get
-                        Started</button>
-                </div>
+                <a href="landing.html" class="nav-link">
+                    <span class="text-2xl sm:text-4xl font-bold">ClothIn.</span>
+                </a>
             </div>
         </div>
     </header>
@@ -562,29 +515,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            //menu mobile
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuIcon = document.getElementById('menu-icon');
-            const closeIcon = document.getElementById('close-icon');
-
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-                menuIcon.classList.toggle('hidden');
-                closeIcon.classList.toggle('hidden');
-            });
-
             // scroll smooth tap navbar
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     if (this.getAttribute('href').includes('#')) {
                         e.preventDefault();
-
-                        if (!mobileMenu.classList.contains('hidden')) {
-                            mobileMenu.classList.add('hidden');
-                            menuIcon.classList.remove('hidden');
-                            closeIcon.classList.add('hidden');
-                        }
 
                         const targetId = this.getAttribute('href').split('#')[1];
                         const targetElement = document.getElementById(targetId);
