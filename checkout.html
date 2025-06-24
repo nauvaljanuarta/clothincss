@@ -148,6 +148,15 @@
             color: #3B82F6;
         }
 
+        .payment-form {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .payment-form.active {
+            display: block;
+        }
+
         .order-summary {
             background-color: white;
             padding: 2.5rem;
@@ -348,6 +357,47 @@
             border-top: 1px solid #E5E7EB;
         }
 
+        .bank-info {
+            background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+            border: 1px solid #BAE6FD;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .bank-info h4 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #0C4A6E;
+        }
+
+        .bank-details {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .bank-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #BAE6FD;
+        }
+
+        .bank-detail:last-child {
+            border-bottom: none;
+        }
+
+        .bank-detail span:first-child {
+            font-weight: 600;
+            color: #0C4A6E;
+        }
+
+        .bank-detail span:last-child {
+            font-family: monospace;
+            color: #1E40AF;
+        }
+
         @media (max-width: 768px) {
             .checkout-grid {
                 grid-template-columns: 1fr;
@@ -540,7 +590,7 @@
                         </div>
 
                         <!-- Credit Card Form -->
-                        <div id="credit-card-form" class="payment-form">
+                        <div id="credit-card-form" class="payment-form active">
                             <div class="form-grid">
                                 <div class="form-group full-width">
                                     <label for="cardNumber" class="form-label">Card Number</label>
@@ -558,6 +608,81 @@
                                     <label for="cardName" class="form-label">Name on Card</label>
                                     <input type="text" id="cardName" name="cardName" class="form-input">
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Transfer Form -->
+                        <div id="bank-transfer-form" class="payment-form">
+                            <div class="bank-info">
+                                <h4>Bank Transfer Details</h4>
+                                <p class="text-sm text-gray-600 mb-4">Please transfer the total amount to one of the following bank accounts:</p>
+                                
+                                <div class="bank-details">
+                                    <div class="bank-detail">
+                                        <span>Bank Name:</span>
+                                        <span>Bank Central Asia (BCA)</span>
+                                    </div>
+                                    <div class="bank-detail">
+                                        <span>Account Number:</span>
+                                        <span>1234567890</span>
+                                    </div>
+                                    <div class="bank-detail">
+                                        <span>Account Name:</span>
+                                        <span>ClothIn Indonesia</span>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #BAE6FD;">
+                                    <div class="bank-detail">
+                                        <span>Bank Name:</span>
+                                        <span>Bank Mandiri</span>
+                                    </div>
+                                    <div class="bank-detail">
+                                        <span>Account Number:</span>
+                                        <span>0987654321</span>
+                                    </div>
+                                    <div class="bank-detail">
+                                        <span>Account Name:</span>
+                                        <span>ClothIn Indonesia</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group" style="margin-top: 1.5rem;">
+                                <label for="transferProof" class="form-label">Upload Transfer Proof</label>
+                                <input type="file" id="transferProof" name="transferProof" class="form-input" accept="image/*,.pdf">
+                                <p class="text-sm text-gray-500 mt-2">Please upload your transfer receipt (JPG, PNG, or PDF)</p>
+                            </div>
+                        </div>
+
+                        <!-- E-Wallet Form -->
+                        <div id="e-wallet-form" class="payment-form">
+                            <div class="form-group">
+                                <label for="walletType" class="form-label">Select E-Wallet</label>
+                                <select id="walletType" name="walletType" class="form-select">
+                                    <option value="">Choose E-Wallet</option>
+                                    <option value="gopay">GoPay</option>
+                                    <option value="ovo">OVO</option>
+                                    <option value="dana">DANA</option>
+                                    <option value="linkaja">LinkAja</option>
+                                    <option value="shopeepay">ShopeePay</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="walletNumber" class="form-label">E-Wallet Phone Number</label>
+                                <input type="tel" id="walletNumber" name="walletNumber" class="form-input" placeholder="08xxxxxxxxxx">
+                                <p class="text-sm text-gray-500 mt-2">Enter the phone number registered with your e-wallet</p>
+                            </div>
+                            
+                            <div class="bank-info">
+                                <h4>Payment Instructions</h4>
+                                <ol class="text-sm text-gray-700 space-y-2 mt-3">
+                                    <li>1. You will receive a payment notification on your selected e-wallet app</li>
+                                    <li>2. Open your e-wallet app and confirm the payment</li>
+                                    <li>3. Enter your e-wallet PIN to complete the transaction</li>
+                                    <li>4. Your order will be processed once payment is confirmed</li>
+                                </ol>
                             </div>
                         </div>
 
@@ -593,7 +718,7 @@
                     </div>
 
                     <div class="order-item">
-                        <img src="https://images.unsplash.com/photo-1549060279-7e168f8d7237?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Floral Dress" class="item-image">
+                        <img src="https://images.unsplash.com/photo-1713621181744-44c07e82f088?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Floral Dress" class="item-image">
                         <div class="item-details">
                             <h4>Summer Floral Dress</h4>
                             <p>Size: M • Qty: 1</p>
@@ -667,12 +792,25 @@
     </footer>
 
     <script>
+        // Payment method switching functionality
         document.querySelectorAll('input[name="payment"]').forEach(radio => {
             radio.addEventListener('change', function() {
+                // Update selected payment method visual state
                 document.querySelectorAll('.payment-method').forEach(method => {
                     method.classList.remove('selected');
                 });
                 this.closest('.payment-method').classList.add('selected');
+                
+                // Hide all payment forms
+                document.querySelectorAll('.payment-form').forEach(form => {
+                    form.classList.remove('active');
+                });
+                
+                // Show the selected payment form
+                const selectedForm = document.getElementById(this.value + '-form');
+                if (selectedForm) {
+                    selectedForm.classList.add('active');
+                }
             });
         });
 
@@ -680,7 +818,7 @@
             const form = document.getElementById('checkout-form');
             const formData = new FormData(form);
 
-            // Basic validation
+            // Basic validation for shipping information
             const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'zipCode'];
             let isValid = true;
 
@@ -694,13 +832,58 @@
                 }
             });
 
+            // Validate payment method specific fields
+            const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+            
+            if (selectedPayment === 'credit-card') {
+                const cardFields = ['cardNumber', 'expiryDate', 'cvv', 'cardName'];
+                cardFields.forEach(field => {
+                    const input = document.getElementById(field);
+                    if (!input.value.trim()) {
+                        input.style.borderColor = '#EF4444';
+                        isValid = false;
+                    } else {
+                        input.style.borderColor = '#E5E7EB';
+                    }
+                });
+            } else if (selectedPayment === 'bank-transfer') {
+                const transferProof = document.getElementById('transferProof');
+                if (!transferProof.files.length) {
+                    transferProof.style.borderColor = '#EF4444';
+                    isValid = false;
+                    alert('Please upload your transfer proof.');
+                    return;
+                } else {
+                    transferProof.style.borderColor = '#E5E7EB';
+                }
+            } else if (selectedPayment === 'e-wallet') {
+                const walletFields = ['walletType', 'walletNumber'];
+                walletFields.forEach(field => {
+                    const input = document.getElementById(field);
+                    if (!input.value.trim()) {
+                        input.style.borderColor = '#EF4444';
+                        isValid = false;
+                    } else {
+                        input.style.borderColor = '#E5E7EB';
+                    }
+                });
+            }
+
             if (!isValid) {
                 alert('Please fill in all required fields.');
                 return;
             }
 
             // Simulate order processing
-            alert('Order placed successfully! Order ID: CLT-' + Date.now());
+            let message = 'Order placed successfully! Order ID: CLT-' + Date.now();
+            
+            if (selectedPayment === 'bank-transfer') {
+                message += '\n\nPlease complete your bank transfer and upload the proof of payment.';
+            } else if (selectedPayment === 'e-wallet') {
+                message += '\n\nPlease check your e-wallet app to complete the payment.';
+            }
+            
+            alert(message);
             window.location.href = 'transactionhistory.html';
         }
 
