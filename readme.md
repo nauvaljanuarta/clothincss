@@ -47,6 +47,6 @@ Backend: (A backend would be needed to make this a fully functional application,
 
 **AI Support** 
 
-- IBM Granite : Use as a simple 
+- IBM Granite : Use as a simple task like javascript flow Inside, Adjusting image and asset place.
 
 use it wisely 😊✨ 
