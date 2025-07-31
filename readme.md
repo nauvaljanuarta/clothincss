@@ -39,9 +39,9 @@ User Features:
 - Article Management: Create, edit, and publish articles for the blog section.
 
 
-Technologies Used
+**Technologies Used**
 
-Frontend: HTML, CSS (with Tailwind CSS), JavaScript
+Frontend: HTML, CSS (with Tailwind CSS), JavaScript 
 
 Backend: (A backend would be needed to make this a fully functional application, but based on the provided files, it's a frontend-only project at this stage).
 
