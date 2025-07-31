@@ -45,5 +45,8 @@ Frontend: HTML, CSS (with Tailwind CSS), JavaScript
 
 Backend: (A backend would be needed to make this a fully functional application, but based on the provided files, it's a frontend-only project at this stage).
 
+**AI Support** 
+
+- IBM Granite : Use as a simple 
 
 use it wisely 😊✨ 
