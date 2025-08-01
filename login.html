@@ -229,6 +229,15 @@
             <span class="auth-divider-text">or login with email</span>
           </div>
 
+          <div class="mb-4 text-center">
+            <button id="toggleDemo" class="text-sm text-blue-500 hover:underline focus:outline-none">Show Demo Credentials</button>
+            <div id="demoCredentials" class="hidden mt-2 p-3 border border-yellow-300 bg-yellow-50 rounded-md text-sm text-yellow-800">
+              <p class="font-bold">Accounts for Demo:</p>
+              <p><strong>Admin:</strong> admin@gmail.com / <strong>Pass:</strong> 12345678</p>
+              <p><strong>User:</strong> user@gmail.com / <strong>Pass:</strong> 12345678</p>
+            </div>
+          </div>
+          
           <form id="loginForm">
             <div class="form-group">
               <label for="email" class="form-label">Email Address</label>
@@ -415,7 +424,6 @@
     </div>
   </footer>
 
-  <!-- Back to Top Button -->
   <button id="back-to-top" class="back-to-top p-2 rounded-full bg-blue-500 text-white shadow-md hover:bg-blue-500/90">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
@@ -424,7 +432,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Message box functions
       function showMessageBox(title, message) {
         document.getElementById('messageBoxTitle').textContent = title;
         document.getElementById('messageBoxContent').textContent = message;
@@ -437,10 +444,9 @@
         document.getElementById('messageBox').style.display = 'none';
       }
 
-      // Login handler
       const loginForm = document.getElementById('loginForm');
       loginForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault(); 
 
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
@@ -451,6 +457,20 @@
           window.location.href = 'catalog.html';
         } else {
           showMessageBox('Login Failed', 'Invalid email or password. Please try again.');
+        }
+      });
+
+      const toggleButton = document.getElementById('toggleDemo');
+      const credentialsDiv = document.getElementById('demoCredentials');
+
+      toggleButton.addEventListener('click', function() {
+        const isHidden = credentialsDiv.classList.contains('hidden');
+        if (isHidden) {
+          credentialsDiv.classList.remove('hidden');
+          toggleButton.textContent = 'Hide Demo Credentials';
+        } else {
+          credentialsDiv.classList.add('hidden');
+          toggleButton.textContent = 'Show Demo Credentials';
         }
       });
 

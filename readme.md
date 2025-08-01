@@ -48,5 +48,7 @@ Backend: (A backend would be needed to make this a fully functional application,
 **AI Support** 
 
 - IBM Granite : Use as a simple task like javascript flow Inside, Adjusting image and asset place.
+- Gemini : Use as a Companion AI, use for fixing several bugs
+- v0 : Use it as a front end inspire interface.
 
 use it wisely 😊✨ 
