@@ -16,7 +16,7 @@
 
     body {
       font-family: 'Montserrat', sans-serif;
-      overflow-x: hidden;
+      /* overflow-x: hidden; */
     }
 
     .sticky {
@@ -33,7 +33,7 @@
       height: calc(100vh - 5rem);
       overflow-y: auto;
       background-color: white;
-      z-index: 50;
+      z-index: 30;
     }
 
     .filter-group {
@@ -836,8 +836,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268
-                        stroke-linejoin=" round" stroke-width="2" d=" M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268
-                                                    2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477
+                        stroke-linejoin=" round" stroke-width="2" d=" M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0
+                                                    8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477
                                                     0-8.268-2.943-9.542-7z" />
                       </svg>
                     </button>
@@ -931,6 +931,12 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const header = document.getElementById('navbar');
+      const headerObserver = new IntersectionObserver((entries) => {
+        header.classList.toggle('scrolled', window.scrollY > 50);
+      });
+
+      headerObserver.observe(header);
+
       window.addEventListener('scroll', function () {
         header.classList.toggle('scrolled', window.scrollY > 50);
       });
